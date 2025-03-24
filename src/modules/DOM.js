@@ -6,6 +6,7 @@ import Tomorrow from "../asset/images/Tomorrow.svg";
 import Upcoming from "../asset/images/Upcoming.svg";
 import threeDots from "../asset/images/3dots.svg";
 import addIcon from "../asset/images/addIcon.svg";
+import closeIcon from "../asset/images/closeIcon.svg";
 const projects = JSON.parse(localStorage.getItem("projects"));
 export const DOM_generate = () => {
   const body = document.querySelector("body");
@@ -46,6 +47,7 @@ export const DOM_generate = () => {
     divHead.appendChild(h2);
     const icon = document.createElement("img");
     icon.src = addIcon;
+    icon.setAttribute("class", "addIconProject");
     divHead.appendChild(icon);
     div.appendChild(divHead);
     const ul = document.createElement("ul");
@@ -120,10 +122,7 @@ export const DOM_generate = () => {
   function renderMainContent() {
     const main = document.querySelector("main");
     const div = document.createElement("div");
-    const ul = document.createElement("ul");
-    ul.setAttribute("class", "taskList");
     div.setAttribute("class", "mainContent");
-    div.appendChild(ul);
     main.appendChild(div);
   }
 
@@ -139,6 +138,7 @@ export const DOM_generate = () => {
     find,
   };
 };
+
 export const Event_handle = () => {
   function displayCategory() {
     const categoryList = document.querySelectorAll(`.category li`);
@@ -154,6 +154,8 @@ export const Event_handle = () => {
     projectList.forEach((li) => {
       li.addEventListener("click", () => {
         // renderMainContent();
+        const mainContent = document.querySelector(".mainContent");
+        mainContent.innerHTML = ``;
         const index = li.dataset.index;
         console.log(index);
         renderProject(index);
@@ -168,38 +170,89 @@ export const Event_handle = () => {
     });
   }
   function renderProject(projectID) {
-    const project = projects.find((theProject) => (theProject.id = projectID));
-    const name = project.name;
-    const h2 = document.createElement("h2");
-    h2.innerText = name;
+    const project = projects.find(
+      (theProject) => theProject.id === Number(projectID),
+    );
+    console.log(project);
+
     const mainContent = document.querySelector(".mainContent");
-    mainContent.innerHTML = ``;
-    const taskListDOM = document.querySelector(".taskList");
+    const taskListDOM = document.createElement("ul");
+    taskListDOM.setAttribute("class", "taskList");
+    mainContent.appendChild(taskListDOM);
+    const h2 = document.createElement("h2");
+    const name = project.name;
+    h2.textContent = name;
     mainContent.insertBefore(h2, taskListDOM);
     if (project) {
       const taskList = project.taskList;
+      console.log(taskList);
       if (taskList.length > 0) {
+        console.log(taskList);
         renderTask(taskList);
       }
     }
   }
   function renderTask(taskList) {
     const taskListDOM = document.querySelector(".taskList");
+    const mainContent = document.querySelector(".mainContent");
+    mainContent.appendChild(taskListDOM);
     taskList.forEach((task) => {
       const li = document.createElement("li");
       li.setAttribute("class", "task");
-      task.length.forEach((property) => {
-        const p = document.createElement("p");
-        p.innerText = property.value;
-        li.appendChild(p);
-      });
+      const p1 = document.createElement("p");
+      const p2 = document.createElement("p");
+      const p3 = document.createElement("p");
+      p1.textContent = task.taskName;
+      p2.textContent = task.taskPriority;
+      p3.textContent = task.taskDuedate;
+      li.appendChild(p1);
+      li.appendChild(p2);
+      li.appendChild(p3);
       taskListDOM.appendChild(li);
     });
+  }
+  function addIconProjectClick() {
+    const addIconProject = document.querySelector(".addIconProject");
+    addIconProject.addEventListener("click", () => {
+      console.log("hello");
+      addBlurLayer();
+      displayProjectInfoAddBoard();
+    });
+  }
+  function displayProjectInfoAddBoard() {
+    const closeBtn = document.createElement("img");
+    closeBtn.src = closeIcon;
+    closeBtn.alt = "close icon";
+    closeBtn.setAttribute("class", "closeBtn");
+    const body = document.querySelector("body");
+    const boardDiv = document.createElement("div");
+    boardDiv.setAttribute("class", "projectAddBoard");
+    const label = document.createElement("label");
+    label.setAttribute("for", "projectName");
+    label.innerText = `Project's Name: `;
+    const input = document.createElement("input");
+    input.setAttribute("id", "projectName");
+    input.setAttribute("type", "text");
+    const submitBtn = document.createElement("button");
+    submitBtn.setAttribute("class", "projectSubmitBtn");
+    submitBtn.textContent = "Submit";
+    boardDiv.appendChild(closeBtn);
+    boardDiv.appendChild(label);
+    boardDiv.appendChild(input);
+    boardDiv.appendChild(submitBtn);
+    body.appendChild(boardDiv);
+  }
+  function addBlurLayer() {
+    const div = document.createElement("div");
+    div.setAttribute("class", "blurLayer");
+    const body = document.querySelector("body");
+    body.appendChild(div);
   }
   return {
     addDataIndexIntoProjects,
     displayProject,
     displayCategory,
+    addIconProjectClick,
   };
 };
 const dom = DOM_generate();
