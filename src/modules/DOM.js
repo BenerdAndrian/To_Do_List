@@ -299,6 +299,7 @@ export const Event_handle = () => {
         addProjectToProjectList(inputValue);
         removeProjectBoard();
         render();
+        threeDotIconClick();
       } else {
         input.setCustomValidity("this box can not be blank.");
       }
@@ -342,6 +343,7 @@ export const Event_handle = () => {
       }
     });
     projectUpdateBtnClick(index);
+    projectDeleteBtnClick(index);
   }
   function removeCurrentProjectOptionBox() {
     const projectOptionBox = document.querySelectorAll(".projectOptionBox");
@@ -350,6 +352,20 @@ export const Event_handle = () => {
         box.remove();
       });
     }
+  }
+  function projectDeleteBtnClick(index) {
+    const deleteBtn = document.querySelector(".projectDeleteBtn");
+    const projects = JSON.parse(localStorage.getItem("projects"));
+    deleteBtn.addEventListener("click", () => {
+      projects.forEach((project, i) => {
+        if (i === index) {
+          projects.splice(i, 1);
+          localStorage.setItem("projects", JSON.stringify(projects));
+          render();
+          threeDotIconClick();
+        }
+      });
+    });
   }
   function projectUpdateBtnClick(index) {
     const updateBtn = document.querySelector(".projectUpdateBtn");
@@ -377,6 +393,8 @@ export const Event_handle = () => {
             console.log(project.name);
           }
           localStorage.setItem("projects", JSON.stringify(projects));
+          render();
+          threeDotIconClick();
         });
       } else {
         input.reportValidity();
