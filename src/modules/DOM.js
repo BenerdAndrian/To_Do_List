@@ -310,6 +310,7 @@ export const Event_handle = () => {
       threeDot.addEventListener("click", () => {
         const prevSibling = threeDot.previousElementSibling;
         const index = Number(prevSibling.dataset.index);
+        removeCurrentProjectOptionBox();
         displayProjectOptionBox(index);
       });
     });
@@ -341,6 +342,15 @@ export const Event_handle = () => {
       }
     });
   }
+  function removeCurrentProjectOptionBox() {
+    const projectOptionBox = document.querySelectorAll(".projectOptionBox");
+    if (projectOptionBox) {
+      projectOptionBox.forEach((box) => {
+        box.remove();
+      });
+    }
+  }
+
   function printProjects() {
     const projects = JSON.parse(localStorage.getItem("projects"));
     console.log(projects);
