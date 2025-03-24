@@ -297,8 +297,9 @@ export const Event_handle = () => {
         removeProjectBoard();
         render();
       } else {
-        input.reportValidity();
+        input.setCustomValidity("this box can not be blank.");
       }
+      input.setCustomValidity("");
     });
   }
   function printProjects() {
