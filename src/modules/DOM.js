@@ -11,7 +11,7 @@ import { addProjectToProjectList } from "./projects.js";
 
 export const render = () => {
   const body = document.querySelector("body");
-  body.innerHTML = ``;
+  body.innerHTML = "";
   const DOM = DOM_generate();
   const event = Event_handle();
   DOM.headerDOMGenerate();
@@ -55,6 +55,7 @@ export const DOM_generate = () => {
   }
   function renderProjects(parentElement) {
     const projects = JSON.parse(localStorage.getItem("projects"));
+    console.log(projects);
     const div = document.createElement("div");
     const divHead = document.createElement("div");
     divHead.setAttribute("class", "container");
@@ -71,6 +72,7 @@ export const DOM_generate = () => {
     projects.forEach((project) => {
       const image = document.createElement("img");
       image.src = threeDots;
+      image.setAttribute("class", "threeDotIcon");
       const li = document.createElement("li");
       const h3 = document.createElement("h3");
       h3.textContent = `${project.name}`;
@@ -167,20 +169,20 @@ export const Event_handle = () => {
     });
   }
   function displayProject() {
-    const projectList = document.querySelectorAll(".projects li");
-    projectList.forEach((li) => {
-      li.addEventListener("click", () => {
+    const projectList = document.querySelectorAll(".projects h3");
+    projectList.forEach((h3) => {
+      h3.addEventListener("click", () => {
         // renderMainContent();
         const mainContent = document.querySelector(".mainContent");
         mainContent.innerHTML = ``;
-        const index = li.dataset.index;
+        const index = h3.dataset.index;
         console.log(index);
         renderProject(index);
       });
     });
   }
   function addDataIndexIntoProjects() {
-    const projectList = document.querySelectorAll(".projects li");
+    const projectList = document.querySelectorAll(".projects h3");
     projectList.forEach((li, index) => {
       li.setAttribute("data-index", index);
       console.log(index);
@@ -290,6 +292,7 @@ export const Event_handle = () => {
     const input = document.querySelector("#projectName");
     submitBtn.addEventListener("click", () => {
       const form = document.querySelector(".projectAddBoard");
+      input.setCustomValidity("");
       if (form.checkValidity()) {
         console.log(input.value);
         const inputValue = input.value;
@@ -299,7 +302,43 @@ export const Event_handle = () => {
       } else {
         input.setCustomValidity("this box can not be blank.");
       }
-      input.setCustomValidity("");
+    });
+  }
+  function threeDotIconClick() {
+    const threeDotIcon = document.querySelectorAll(".threeDotIcon");
+    threeDotIcon.forEach((threeDot) => {
+      threeDot.addEventListener("click", () => {
+        const prevSibling = threeDot.previousElementSibling;
+        const index = Number(prevSibling.dataset.index);
+        displayProjectOptionBox(index);
+      });
+    });
+  }
+  function displayProjectOptionBox(index) {
+    const projectList = document.querySelectorAll(".projects li");
+    projectList.forEach((li) => {
+      const firstChild = li.firstElementChild;
+      const i = Number(firstChild.dataset.index);
+      if (i === index) {
+        console.log("fn");
+        const ul = document.createElement("ul");
+        ul.setAttribute("class", "projectOptionBox");
+        const optionList1 = document.createElement("li");
+        const optionList2 = document.createElement("li");
+        const updateBtn = document.createElement("button");
+        const deleteBtn = document.createElement("button");
+        updateBtn.textContent = "Update";
+        deleteBtn.textContent = "Delete";
+        updateBtn.setAttribute("class", "projectUpdateBtn");
+        deleteBtn.setAttribute("class", "projectDeleteBtn");
+        optionList1.appendChild(updateBtn);
+        optionList2.appendChild(deleteBtn);
+        ul.appendChild(optionList1);
+        ul.appendChild(optionList2);
+        li.appendChild(ul);
+        console.log(li);
+        console.log("fen");
+      }
     });
   }
   function printProjects() {
@@ -312,6 +351,7 @@ export const Event_handle = () => {
     displayCategory,
     addIconProjectClick,
     printProjects,
+    threeDotIconClick,
   };
 };
 const dom = DOM_generate();

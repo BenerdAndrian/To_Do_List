@@ -40,7 +40,6 @@ function addProjectToProjectList(name) {
 function processProjectID() {
   let projects = JSON.parse(localStorage.getItem("projects"));
   projects.forEach((theProject, index) => {
-    console.log("hi" + theProject.id);
     theProject.id = index;
   });
   localStorage.setItem("projects", JSON.stringify(projects));
