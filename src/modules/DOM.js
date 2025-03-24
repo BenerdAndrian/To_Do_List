@@ -244,22 +244,24 @@ export const Event_handle = () => {
     closeBtn.alt = "close icon";
     closeBtn.setAttribute("class", "closeBtn");
     const body = document.querySelector("body");
-    const boardDiv = document.createElement("div");
-    boardDiv.setAttribute("class", "projectAddBoard");
+    const form = document.createElement("form");
+    form.setAttribute("class", "projectAddBoard");
     const label = document.createElement("label");
     label.setAttribute("for", "projectName");
     label.innerText = `Project's Name: `;
     const input = document.createElement("input");
     input.setAttribute("id", "projectName");
     input.setAttribute("type", "text");
+    input.required = true;
     const submitBtn = document.createElement("button");
     submitBtn.setAttribute("class", "projectSubmitBtn");
+    submitBtn.setAttribute("value", "submit");
     submitBtn.textContent = "Submit";
-    boardDiv.appendChild(closeBtn);
-    boardDiv.appendChild(label);
-    boardDiv.appendChild(input);
-    boardDiv.appendChild(submitBtn);
-    body.appendChild(boardDiv);
+    form.appendChild(closeBtn);
+    form.appendChild(label);
+    form.appendChild(input);
+    form.appendChild(submitBtn);
+    body.appendChild(form);
   }
   function addBlurLayer() {
     const div = document.createElement("div");
@@ -285,13 +287,18 @@ export const Event_handle = () => {
   }
   function submitProjectBoardBtnClick() {
     const submitBtn = document.querySelector(".projectSubmitBtn");
+    const input = document.querySelector("#projectName");
     submitBtn.addEventListener("click", () => {
-      const input = document.querySelector("#projectName");
-      console.log(input.value);
-      const inputValue = input.value;
-      addProjectToProjectList(inputValue);
-      removeProjectBoard();
-      render();
+      const form = document.querySelector(".projectAddBoard");
+      if (form.checkValidity()) {
+        console.log(input.value);
+        const inputValue = input.value;
+        addProjectToProjectList(inputValue);
+        removeProjectBoard();
+        render();
+      } else {
+        input.reportValidity();
+      }
     });
   }
   function printProjects() {

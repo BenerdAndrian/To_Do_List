@@ -8,3 +8,4 @@ const task1 = new task(1, "buy sugar", "high", "today", 1);
 const task2 = new task(2, "buy cream", "medium", "today", 1);
 render();
 let Projects = localStorage.setItem("projects", JSON.stringify(projects));
+// localStorage.clear();
