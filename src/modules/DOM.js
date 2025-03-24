@@ -341,6 +341,7 @@ export const Event_handle = () => {
         console.log("fen");
       }
     });
+    projectUpdateBtnClick(index);
   }
   function removeCurrentProjectOptionBox() {
     const projectOptionBox = document.querySelectorAll(".projectOptionBox");
@@ -350,7 +351,39 @@ export const Event_handle = () => {
       });
     }
   }
+  function projectUpdateBtnClick(index) {
+    const updateBtn = document.querySelector(".projectUpdateBtn");
+    updateBtn.addEventListener("click", () => {
+      addBlurLayer();
+      displayProjectInfoAddBoard();
+      closeProjectBoardBtnClick();
+      updateCurrentProject(index);
+    });
+  }
+  function updateCurrentProject(index) {
+    const projects = JSON.parse(localStorage.getItem("projects"));
+    const updateBtn = document.querySelector(".projectSubmitBtn");
 
+    updateBtn.addEventListener("click", () => {
+      let newName;
+      const input = document.querySelector("#projectName");
+      if (input.value) {
+        newName = input.value;
+        console.log(newName);
+        projects.forEach((project, i) => {
+          console.log(project);
+          if (index === i) {
+            project.name = newName;
+            console.log(project.name);
+          }
+          localStorage.setItem("projects", JSON.stringify(projects));
+        });
+      } else {
+        input.reportValidity();
+      }
+    });
+    console.log(projects);
+  }
   function printProjects() {
     const projects = JSON.parse(localStorage.getItem("projects"));
     console.log(projects);
