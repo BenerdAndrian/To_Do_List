@@ -7,9 +7,26 @@ import Upcoming from "../asset/images/Upcoming.svg";
 import threeDots from "../asset/images/3dots.svg";
 import addIcon from "../asset/images/addIcon.svg";
 import closeIcon from "../asset/images/closeIcon.svg";
-const projects = JSON.parse(localStorage.getItem("projects"));
+import { addProjectToProjectList } from "./projects.js";
+
+export const render = () => {
+  const body = document.querySelector("body");
+  body.innerHTML = ``;
+  const DOM = DOM_generate();
+  const event = Event_handle();
+  DOM.headerDOMGenerate();
+  DOM.mainDOMGenerate();
+  DOM.footerDOMGenerate();
+  DOM.mainSidebarDOMGenerate();
+  DOM.renderMainContent();
+  event.addDataIndexIntoProjects();
+  event.displayProject();
+  event.addIconProjectClick();
+  event.printProjects();
+};
 export const DOM_generate = () => {
   const body = document.querySelector("body");
+
   function headerDOMGenerate() {
     const header = document.createElement("header");
     const h1 = document.createElement("h1");
@@ -37,10 +54,10 @@ export const DOM_generate = () => {
     main.appendChild(div);
   }
   function renderProjects(parentElement) {
+    const projects = JSON.parse(localStorage.getItem("projects"));
     const div = document.createElement("div");
     const divHead = document.createElement("div");
     divHead.setAttribute("class", "container");
-
     div.setAttribute("class", "projects");
     const h2 = document.createElement("h2");
     h2.textContent = "Projects";
@@ -170,6 +187,7 @@ export const Event_handle = () => {
     });
   }
   function renderProject(projectID) {
+    const projects = JSON.parse(localStorage.getItem("projects"));
     const project = projects.find(
       (theProject) => theProject.id === Number(projectID),
     );
@@ -216,7 +234,8 @@ export const Event_handle = () => {
     addIconProject.addEventListener("click", () => {
       addBlurLayer();
       displayProjectInfoAddBoard();
-      closeBtnClick();
+      submitProjectBoardBtnClick();
+      closeProjectBoardBtnClick();
     });
   }
   function displayProjectInfoAddBoard() {
@@ -248,25 +267,43 @@ export const Event_handle = () => {
     const body = document.querySelector("body");
     body.appendChild(div);
   }
-  function closeBtnClick() {
+  function closeProjectBoardBtnClick() {
     const closeBtn = document.querySelector(".closeBtn");
     console.log("i");
     if (closeBtn) {
       console.log(true);
       closeBtn.addEventListener("click", () => {
-        const projectAddBoard = document.querySelector(".projectAddBoard");
-        projectAddBoard.remove();
-        const blurLayer = document.querySelector(".blurLayer");
-        blurLayer.remove();
+        removeProjectBoard();
       });
     }
   }
-
+  function removeProjectBoard() {
+    const projectAddBoard = document.querySelector(".projectAddBoard");
+    projectAddBoard.remove();
+    const blurLayer = document.querySelector(".blurLayer");
+    blurLayer.remove();
+  }
+  function submitProjectBoardBtnClick() {
+    const submitBtn = document.querySelector(".projectSubmitBtn");
+    submitBtn.addEventListener("click", () => {
+      const input = document.querySelector("#projectName");
+      console.log(input.value);
+      const inputValue = input.value;
+      addProjectToProjectList(inputValue);
+      removeProjectBoard();
+      render();
+    });
+  }
+  function printProjects() {
+    const projects = JSON.parse(localStorage.getItem("projects"));
+    console.log(projects);
+  }
   return {
     addDataIndexIntoProjects,
     displayProject,
     displayCategory,
     addIconProjectClick,
+    printProjects,
   };
 };
 const dom = DOM_generate();

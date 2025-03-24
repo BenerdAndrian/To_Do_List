@@ -1,4 +1,4 @@
-export class project {
+class project {
   constructor(projectId, projectName) {
     this.projectId = projectId;
     this.projectName = projectName;
@@ -29,5 +29,23 @@ export class project {
     this.tasklist.push(task);
   }
 }
+function addProjectToProjectList(name) {
+  let projects = JSON.parse(localStorage.getItem("projects"));
+  console.log(projects);
+  console.log(projects);
+  const newProjectID = projects.length - 1;
+  const newProject = new project(newProjectID, name);
+  projects.push(newProject);
+  processProjectID();
+  localStorage.setItem("projects", JSON.stringify(projects));
+}
+function processProjectID() {
+  let projects = JSON.parse(localStorage.getItem("projects"));
+  projects.forEach((theProject, index) => {
+    console.log(theProject.id);
+    theProject.id = index;
+  });
+}
+export { addProjectToProjectList, project };
 const project1 = new project(1, "bake a cake");
 project1.displayProject();
