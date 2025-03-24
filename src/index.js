@@ -16,4 +16,5 @@ const event = Event_handle();
 event.addDataIndexIntoProjects();
 event.displayProject();
 event.addIconProjectClick();
+
 let Projects = localStorage.setItem("projects", JSON.stringify(projects));

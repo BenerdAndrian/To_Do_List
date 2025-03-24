@@ -214,9 +214,9 @@ export const Event_handle = () => {
   function addIconProjectClick() {
     const addIconProject = document.querySelector(".addIconProject");
     addIconProject.addEventListener("click", () => {
-      console.log("hello");
       addBlurLayer();
       displayProjectInfoAddBoard();
+      closeBtnClick();
     });
   }
   function displayProjectInfoAddBoard() {
@@ -248,6 +248,20 @@ export const Event_handle = () => {
     const body = document.querySelector("body");
     body.appendChild(div);
   }
+  function closeBtnClick() {
+    const closeBtn = document.querySelector(".closeBtn");
+    console.log("i");
+    if (closeBtn) {
+      console.log(true);
+      closeBtn.addEventListener("click", () => {
+        const projectAddBoard = document.querySelector(".projectAddBoard");
+        projectAddBoard.remove();
+        const blurLayer = document.querySelector(".blurLayer");
+        blurLayer.remove();
+      });
+    }
+  }
+
   return {
     addDataIndexIntoProjects,
     displayProject,
