@@ -1,7 +1,7 @@
 class project {
-  constructor(projectId, projectName) {
-    this.projectId = projectId;
-    this.projectName = projectName;
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
     this.tasklist = [];
   }
   static createProject(id, name, tasklist) {
@@ -9,18 +9,16 @@ class project {
     return newProject;
   }
   updateProject(newId, newName) {
-    this.projectId = newId;
-    this.projectName = newName;
+    this.id = newId;
+    this.name = newName;
   }
   displayProject() {
-    console.log(`project's name: ${this.projectName}`);
-    console.log(`project's ID: ${this.projectId}`);
+    console.log(`project's name: ${this.name}`);
+    console.log(`project's ID: ${this.id}`);
     console.log(`project's tasklist: ${this.tasklist}`);
   }
   deleteProject(project_id, projectList) {
-    const index = projectList.findIndex(
-      (project) => project.projectId === project_id,
-    );
+    const index = projectList.findIndex((project) => project.id === project_id);
     if (index) {
       projectList.splice(index, 1);
     }
