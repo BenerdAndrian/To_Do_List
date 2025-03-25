@@ -29,8 +29,7 @@ const re_render = (index) => {
   DOM.mainSidebarDOMGenerate();
   DOM.renderMainContent();
   DOM.footerDOMGenerate();
-
-  event.addDataIndexIntoProjects();
+  event.addDataIntoElement();
   event.displayProject();
   event.addIconProjectClick();
   event.printProjects();
@@ -47,7 +46,8 @@ export const render = () => {
   DOM.mainSidebarDOMGenerate();
   DOM.renderMainContent();
   DOM.footerDOMGenerate();
-  event.addDataIndexIntoProjects();
+  const projectList = document.querySelectorAll(".projects h3");
+  event.addDataIntoElement(projectList);
   event.displayProject();
   event.addIconProjectClick();
   event.printProjects();
@@ -223,8 +223,7 @@ export const Event_handle = () => {
       });
     });
   }
-  function addDataIndexIntoProjects() {
-    const projectList = document.querySelectorAll(".projects h3");
+  function addDataIntoElement(projectList) {
     projectList.forEach((li, index) => {
       li.setAttribute("data-index", index);
       console.log(index);
@@ -630,14 +629,22 @@ export const Event_handle = () => {
     const projects = JSON.parse(localStorage.getItem("projects"));
     console.log(projects);
   }
+  // function taskThreeDotsIconClick() {
+  //   const dotIcon = document.querySelectorAll(".taskList .task .threeDotIcon");
+  //   dotIcon.forEach((icon) => {
+  //     icon.addEventListener("click", () => {
+  //       displayTaskOptionBox(index);
+  //     });
+  //   });
+  // }
   return {
-    addDataIndexIntoProjects,
     displayProject,
     displayCategory,
     addIconProjectClick,
     printProjects,
     threeDotIconClick,
     clickOutsideOfProjectOptionBox,
+    addDataIntoElement,
   };
 };
 const dom = DOM_generate();
