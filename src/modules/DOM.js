@@ -8,6 +8,7 @@ import threeDots from "../asset/images/3dots.svg";
 import addIcon from "../asset/images/addIcon.svg";
 import closeIcon from "../asset/images/closeIcon.svg";
 import gitLogo from "../asset/images/gitLogo.svg";
+import addTaskIcon from "../asset/images/addTask.svg";
 import { addProjectToProjectList, processProjectID } from "./projects.js";
 
 export const render = () => {
@@ -208,10 +209,18 @@ export const Event_handle = () => {
     const taskListDOM = document.createElement("ul");
     taskListDOM.setAttribute("class", "taskList");
     mainPart.appendChild(taskListDOM);
+    const div = document.createElement("div");
+    div.setAttribute("class", "taskHeader");
     const h2 = document.createElement("h2");
     const name = project.name;
     h2.textContent = name;
-    mainPart.insertBefore(h2, taskListDOM);
+    div.appendChild(h2);
+    const img = document.createElement("img");
+    img.src = addTaskIcon;
+    img.alt = "add Task Icon";
+    img.setAttribute("class", "addTaskIcon");
+    div.appendChild(img);
+    mainPart.insertBefore(div, taskListDOM);
     if (project) {
       const taskList = project.taskList;
       console.log(taskList);
@@ -228,6 +237,10 @@ export const Event_handle = () => {
     taskList.forEach((task) => {
       const li = document.createElement("li");
       li.setAttribute("class", "task");
+      const p = document.createElement("p");
+      p.setAttribute("class", "priorityLevelUI");
+      const color = displayPriorityColor(task.taskPriority);
+      p.style.backgroundColor = `${color}`;
       const input = document.createElement("input");
       input.type = "checkbox";
       const p1 = document.createElement("p");
@@ -237,7 +250,7 @@ export const Event_handle = () => {
       const img = document.createElement("img");
       img.src = threeDots;
       img.setAttribute("class", "threeDotIcon");
-      const fixedLength = 50;
+      const fixedLength = 40;
       const taskNameLength = task.taskName.length;
       const taskDetailLength = task.taskDetail.length;
       const taskName = display3DotsForRestOfText(
@@ -254,6 +267,7 @@ export const Event_handle = () => {
       p2.textContent = task.taskPriority;
       p3.textContent = task.taskDuedate;
       p4.textContent = taskDetail;
+      li.appendChild(p);
       li.appendChild(input);
       li.appendChild(p1);
       li.appendChild(p2);
@@ -262,6 +276,11 @@ export const Event_handle = () => {
       li.appendChild(img);
       taskListDOM.appendChild(li);
     });
+  }
+  function displayPriorityColor(priority) {
+    if (priority === "High") return "rgb(189, 20, 20)";
+    else if (priority === "Medium") return "rgb(185, 159, 13)";
+    else return "green";
   }
   function display3DotsForRestOfText(string, stringLength, fixedLength) {
     if (stringLength > fixedLength) {

@@ -2,6 +2,7 @@
     --header-color:rgba(12, 15, 70, 0.945);
     --sidebar-color:rgba(30, 46, 99, 0.945);
     --font-header-color:white;
+    --category-background-color:rgb(42, 136, 165);
 }
 *{
     padding:0;
@@ -31,7 +32,7 @@ header h1{
 main{
     grid-row:2/3;
     display:grid;
-    grid-template-columns:1fr 4fr;
+    grid-template-columns:1.1fr 4fr;
 }
 .sidebar{
     grid-column:1/2;
@@ -91,16 +92,13 @@ main{
 }
 .category{
     grid-row:1/2;
-    background-color:aqua;
+    background-color:var(--category-background-color);
 }
 .mainPart{
     grid-row:2/3;
     padding:1rem;
 }
-.mainPart h2{
-    font-size:2rem;
-    margin-bottom:2rem;
-}
+
 footer{
     grid-row:3/4;
     background-color: var(--header-color);
@@ -125,7 +123,7 @@ footer img{
     margin-right:1rem;
 }
 .projects li h3{
-    font-size:1.3rem;
+    font-size:1.4rem;
     color:var(--font-header-color)
 }
 .projects li{
@@ -203,15 +201,48 @@ footer img{
 }
 .taskList .task{
     display:flex;
-    justify-content:space-evenly;
+    justify-content:space-between;
     background-color:bisque;
     margin-bottom:2rem;
+    padding:0.5rem 1rem;
+    border-radius:0.5rem;
+    align-items: center;
+    position:relative;
 }
-.taskList .task p{
+.taskList .task input{
+    width:25px;
+    height:25px;
+    margin-right:2rem;
+    margin-left:2rem;
+}
+.taskList .task p :not(.priorityLevelUI){
     flex:1;
+    font-size:1.25rem;
 }
 .addIconProject{
     width:50px;
     height:50px;
+    cursor:pointer;
+}
+.priorityLevelUI{
+    display:inline-block;
+    height:100%;
+    width:1rem;
+    position:absolute;
+    left:0;
+}
+.taskHeader{
+    display:flex;
+    align-items:center;
+    margin-bottom:2rem;
+ 
+}
+.taskHeader h2{
+    font-size:2rem;
+    margin-right:1rem;
+}
+.taskHeader img{
+    width:40px;
+    height:40px;
     cursor:pointer;
 }
