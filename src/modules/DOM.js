@@ -23,6 +23,7 @@ export const render = () => {
   event.displayProject();
   event.addIconProjectClick();
   event.printProjects();
+  event.clickOutsideOfProjectOptionBox();
 };
 export const DOM_generate = () => {
   const body = document.querySelector("body");
@@ -316,6 +317,16 @@ export const Event_handle = () => {
       });
     });
   }
+  function clickOutsideOfProjectOptionBox() {
+    document.body.addEventListener("click", (e) => {
+      if (
+        !(e.target.tagName === "IMG" && e.target.parentNode.tagName === "LI")
+      ) {
+        removeCurrentProjectOptionBox();
+      }
+    });
+  }
+
   function displayProjectOptionBox(index) {
     const projectList = document.querySelectorAll(".projects li");
     projectList.forEach((li) => {
@@ -413,6 +424,7 @@ export const Event_handle = () => {
     addIconProjectClick,
     printProjects,
     threeDotIconClick,
+    clickOutsideOfProjectOptionBox,
   };
 };
 const dom = DOM_generate();
