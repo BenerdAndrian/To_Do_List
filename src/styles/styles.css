@@ -97,6 +97,8 @@ main{
 .mainPart{
     grid-row:2/3;
     padding:1rem;
+    overflow:hidden;
+    scroll-behavior:auto;
 }
 
 footer{

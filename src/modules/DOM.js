@@ -295,8 +295,10 @@ export const Event_handle = () => {
     addIconProject.addEventListener("click", () => {
       addBlurLayer();
       displayProjectInfoAddBoard();
+      const closeBtn = document.querySelector(".closeBtn");
       submitProjectBoardBtnClick();
-      closeProjectBoardBtnClick();
+      const projectAddBoard = document.querySelector(".projectAddBoard");
+      closeBoard(closeBtn, projectAddBoard);
     });
   }
   function displayProjectInfoAddBoard() {
@@ -330,19 +332,17 @@ export const Event_handle = () => {
     const body = document.querySelector("body");
     body.appendChild(div);
   }
-  function closeProjectBoardBtnClick() {
-    const closeBtn = document.querySelector(".closeBtn");
+  function closeBoard(closeBtn, board) {
     console.log("i");
     if (closeBtn) {
       console.log(true);
       closeBtn.addEventListener("click", () => {
-        removeProjectBoard();
+        removeProjectBoard(board);
       });
     }
   }
-  function removeProjectBoard() {
-    const projectAddBoard = document.querySelector(".projectAddBoard");
-    projectAddBoard.remove();
+  function removeProjectBoard(board) {
+    board.remove();
     const blurLayer = document.querySelector(".blurLayer");
     blurLayer.remove();
   }
@@ -442,7 +442,6 @@ export const Event_handle = () => {
     updateBtn.addEventListener("click", () => {
       addBlurLayer();
       displayProjectInfoAddBoard();
-      closeProjectBoardBtnClick();
       updateCurrentProject(index);
     });
   }
@@ -558,7 +557,9 @@ export const Event_handle = () => {
     form.appendChild(div);
     body.appendChild(form);
     taskAddBoardBtnAddClick(projectID);
+    closeBoard(closeButton, form);
   }
+
   function taskAddBoardBtnAddClick(projectID) {
     const projects = JSON.parse(localStorage.getItem("projects"));
     const taskAddBoardBtn = document.querySelector(".taskAddBoardBtn");
