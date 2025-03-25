@@ -221,7 +221,6 @@ export const Event_handle = () => {
     img.setAttribute("class", "addTaskIcon");
     div.appendChild(img);
     mainPart.insertBefore(div, taskListDOM);
-    addTaskIconClick();
     if (project) {
       const taskList = project.taskList;
       console.log(taskList);
@@ -229,6 +228,7 @@ export const Event_handle = () => {
         console.log(taskList);
         renderTask(taskList);
       }
+      addTaskIconClick(projectID);
     }
   }
   function renderTask(taskList) {
@@ -473,14 +473,14 @@ export const Event_handle = () => {
     console.log(projects);
   }
   //add task
-  function addTaskIconClick() {
+  function addTaskIconClick(projectID) {
     const addTaskIcon = document.querySelector(".addTaskIcon");
     addTaskIcon.addEventListener("click", () => {
       addBlurLayer();
-      displayAddTaskBoard();
+      displayAddTaskBoard(projectID);
     });
   }
-  function displayAddTaskBoard() {
+  function displayAddTaskBoard(projectID) {
     const div = document.createElement("div");
     div.setAttribute("class", "btnTaskBoard");
     const body = document.querySelector("body");
@@ -514,6 +514,9 @@ export const Event_handle = () => {
     detailInput.cols = 30;
     detailInput.placeholder = "Describe Task Information Or Task's Notes...";
 
+    nameInput.required = "";
+    priorityInput.required = "";
+    duedateInput.required = "";
     const closeButton = document.createElement("button");
     const addButton = document.createElement("button");
     closeButton.setAttribute("class", "taskAddBoardCloseBtn");
@@ -554,6 +557,39 @@ export const Event_handle = () => {
     form.appendChild(detailInput);
     form.appendChild(div);
     body.appendChild(form);
+    taskAddBoardBtnAddClick(projectID);
+  }
+  function taskAddBoardBtnAddClick(projectID) {
+    const projects = JSON.parse(localStorage.getItem("projects"));
+    const taskAddBoardBtn = document.querySelector(".taskAddBoardBtn");
+    const form = document.querySelector(".taskAddBoard");
+    const nameInput = document.querySelector("#taskNameInput");
+    const priorityInput = document.querySelector("#taskPriorityInput");
+    const duedateInput = document.querySelector("#taskDuedateInput");
+    const detailInput = document.querySelector("#taskDetailInput");
+    taskAddBoardBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (form.checkValidity()) {
+        console.log("hello kitty");
+        projects.forEach((project, i) => {
+          //check if projectID taking from the time clicking on project showing is the same with project inside projectList in localstorage
+          if (projectID === i) {
+            // if true then add task with new info into taskList array of the project
+            const taskLength = project.taskList.length;
+            project.taskList.push({
+              taskID: taskLength.value,
+              taskName: nameInput.value,
+              taskPriority: priorityInput.value,
+              taskDuedate: duedateInput.value,
+              taskDetail: detailInput.value,
+            });
+            //reset the localstorage to update latest data
+            localStorage.setItem("projects", JSON.stringify(projects));
+            render();
+          }
+        });
+      }
+    });
   }
   function printProjects() {
     const projects = JSON.parse(localStorage.getItem("projects"));
