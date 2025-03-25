@@ -45,6 +45,6 @@ function processProjectID() {
   localStorage.setItem("projects", JSON.stringify(projects));
 }
 
-export { addProjectToProjectList, project };
+export { addProjectToProjectList, project, processProjectID };
 const project1 = new project(1, "bake a cake");
 project1.displayProject();

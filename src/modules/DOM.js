@@ -8,7 +8,7 @@ import threeDots from "../asset/images/3dots.svg";
 import addIcon from "../asset/images/addIcon.svg";
 import closeIcon from "../asset/images/closeIcon.svg";
 import gitLogo from "../asset/images/gitLogo.svg";
-import { addProjectToProjectList } from "./projects.js";
+import { addProjectToProjectList, processProjectID } from "./projects.js";
 
 export const render = () => {
   const body = document.querySelector("body");
@@ -17,9 +17,9 @@ export const render = () => {
   const event = Event_handle();
   DOM.headerDOMGenerate();
   DOM.mainDOMGenerate();
-  DOM.footerDOMGenerate();
   DOM.mainSidebarDOMGenerate();
   DOM.renderMainContent();
+  DOM.footerDOMGenerate();
   event.addDataIndexIntoProjects();
   event.displayProject();
   event.addIconProjectClick();
@@ -56,8 +56,8 @@ export const DOM_generate = () => {
   function mainSidebarDOMGenerate() {
     const main = document.querySelector("main");
     const div = document.createElement("div");
-    div.setAttribute("class", "sidebar");
-    renderCategories(div);
+    div.setAttribute("class", "projects");
+    // renderCategories(div);
     renderProjects(div);
     main.appendChild(div);
   }
@@ -65,17 +65,14 @@ export const DOM_generate = () => {
     const projects = JSON.parse(localStorage.getItem("projects"));
     console.log(projects);
     const div = document.createElement("div");
-    const divHead = document.createElement("div");
-    divHead.setAttribute("class", "container");
-    div.setAttribute("class", "projects");
+    div.setAttribute("class", "projectCategory");
     const h2 = document.createElement("h2");
     h2.textContent = "Projects";
-    divHead.appendChild(h2);
+    div.appendChild(h2);
     const icon = document.createElement("img");
     icon.src = addIcon;
     icon.setAttribute("class", "addIconProject");
-    divHead.appendChild(icon);
-    div.appendChild(divHead);
+    div.appendChild(icon);
     const ul = document.createElement("ul");
     projects.forEach((project) => {
       const image = document.createElement("img");
@@ -88,14 +85,12 @@ export const DOM_generate = () => {
       li.appendChild(image);
       ul.appendChild(li);
     });
-    div.appendChild(ul);
     parentElement.appendChild(div);
+    parentElement.appendChild(ul);
   }
   function renderCategories(parentElement) {
     const div = document.createElement("div");
     div.setAttribute("class", "category");
-    const h2 = document.createElement("h2");
-    h2.textContent = "Categories";
     const categories = [
       "Inbox",
       "Today",
@@ -117,7 +112,6 @@ export const DOM_generate = () => {
       li.appendChild(h3);
       ul.appendChild(li);
     });
-    div.appendChild(h2);
     div.appendChild(ul);
     parentElement.appendChild(div);
   }
@@ -146,11 +140,19 @@ export const DOM_generate = () => {
     return URL;
   }
 
+  function renderMainPart() {
+    const mainContent = document.querySelector(".mainContent");
+    const mainPart = document.createElement("div");
+    mainPart.setAttribute("class", "mainPart");
+    mainContent.appendChild(mainPart);
+  }
   function renderMainContent() {
     const main = document.querySelector("main");
     const div = document.createElement("div");
     div.setAttribute("class", "mainContent");
     main.appendChild(div);
+    renderCategories(div);
+    renderMainPart();
   }
 
   function find(num) {
@@ -180,9 +182,8 @@ export const Event_handle = () => {
     const projectList = document.querySelectorAll(".projects h3");
     projectList.forEach((h3) => {
       h3.addEventListener("click", () => {
-        // renderMainContent();
-        const mainContent = document.querySelector(".mainContent");
-        mainContent.innerHTML = ``;
+        const mainPart = document.querySelector(".mainPart");
+        mainPart.innerHTML = ``;
         const index = h3.dataset.index;
         console.log(index);
         renderProject(index);
@@ -203,14 +204,14 @@ export const Event_handle = () => {
     );
     console.log(project);
 
-    const mainContent = document.querySelector(".mainContent");
+    const mainPart = document.querySelector(".mainPart");
     const taskListDOM = document.createElement("ul");
     taskListDOM.setAttribute("class", "taskList");
-    mainContent.appendChild(taskListDOM);
+    mainPart.appendChild(taskListDOM);
     const h2 = document.createElement("h2");
     const name = project.name;
     h2.textContent = name;
-    mainContent.insertBefore(h2, taskListDOM);
+    mainPart.insertBefore(h2, taskListDOM);
     if (project) {
       const taskList = project.taskList;
       console.log(taskList);
@@ -222,8 +223,8 @@ export const Event_handle = () => {
   }
   function renderTask(taskList) {
     const taskListDOM = document.querySelector(".taskList");
-    const mainContent = document.querySelector(".mainContent");
-    mainContent.appendChild(taskListDOM);
+    const mainPart = document.querySelector(".mainPart");
+    mainPart.appendChild(taskListDOM);
     taskList.forEach((task) => {
       const li = document.createElement("li");
       li.setAttribute("class", "task");
@@ -409,6 +410,7 @@ export const Event_handle = () => {
         if (i === index) {
           projects.splice(i, 1);
           localStorage.setItem("projects", JSON.stringify(projects));
+          processProjectID();
           render();
           threeDotIconClick();
         }

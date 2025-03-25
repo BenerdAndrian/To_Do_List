@@ -1,6 +1,6 @@
 :root{
     --header-color:rgba(12, 15, 70, 0.945);
-    --sidebar-color:rgba(0, 0, 0, 0.945);
+    --sidebar-color:rgba(30, 46, 99, 0.945);
     --font-header-color:white;
 }
 *{
@@ -35,37 +35,49 @@ main{
 }
 .sidebar{
     grid-column:1/2;
-    display:grid;
-    grid-template-rows:1fr 1fr;
     font-size:1.6rem;
     background-color:var(--sidebar-color);
     color:var(--font-header-color);
 }
-.sidebar .category{
-    grid-row:1/2;
-    margin-top:2rem;
-}
 .category ul,.projects ul{
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     gap:1rem;
 }
 .category li img{
   margin-right:0.5rem;
 }
-.category ul{
-    margin-top:2rem;
+.projects{
+    grid-column:1/2;
+    background-color:var(--sidebar-color);
+    padding-left:0.5rem;
 }
 .projects ul{
     margin-top:1rem;
+    display:flex;
+    flex-direction: column;
+
 }
-.sidebar .projects{
-    grid-row:2/3;
-    margin-top:2rem;
+.category li h3{
+    font-size:1.5rem;
+}
+.category ul{
+    justify-content:space-evenly;
+    align-items: center;
+    margin-top:1rem;
 }
 .category li img{
-    width:35px;
-    height:35px;
+    width:30px;
+    height:30px;
+}
+.projectCategory{
+    display:flex;
+    margin-top:2rem;
+    justify-content:space-between;
+}
+.projectCategory h2{
+    font-size:2.2rem;
+    color:white;
 }
 .category li{
     display:flex;
@@ -73,6 +85,21 @@ main{
 }
 .mainContent{
     grid-column:2/3;
+    display:grid;
+    grid-template-rows:1fr 10fr;
+    position:relative;
+}
+.category{
+    grid-row:1/2;
+    background-color:aqua;
+}
+.mainPart{
+    grid-row:2/3;
+    padding:1rem;
+}
+.mainPart h2{
+    font-size:2rem;
+    margin-bottom:2rem;
 }
 footer{
     grid-row:3/4;
@@ -163,6 +190,7 @@ footer img{
     right:-10.5rem;
     border:1px solid;
     background-color:rgb(214, 214, 214);
+    z-index:1;
 }
 .projectUpdateBtn,.projectDeleteBtn{
     padding:0.5rem 3rem;
@@ -181,4 +209,9 @@ footer img{
 }
 .taskList .task p{
     flex:1;
+}
+.addIconProject{
+    width:50px;
+    height:50px;
+    cursor:pointer;
 }
