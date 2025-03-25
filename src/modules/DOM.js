@@ -18,7 +18,25 @@ function display3DotsForRestOfText(string, stringLength, fixedLength) {
     return string;
   }
 }
+//render the page but go back to current project display rather than render from the initial state
+const re_render = (index) => {
+  const body = document.querySelector("body");
+  body.innerHTML = "";
+  const DOM = DOM_generate();
+  const event = Event_handle();
+  DOM.headerDOMGenerate();
+  DOM.mainDOMGenerate();
+  DOM.mainSidebarDOMGenerate();
+  DOM.renderMainContent();
+  DOM.footerDOMGenerate();
 
+  event.addDataIndexIntoProjects();
+  event.displayProject();
+  event.addIconProjectClick();
+  event.printProjects();
+  event.clickOutsideOfProjectOptionBox();
+  event.renderProject(index);
+};
 export const render = () => {
   const body = document.querySelector("body");
   body.innerHTML = "";
@@ -368,7 +386,6 @@ export const Event_handle = () => {
         console.log(input.value);
         const inputValue = input.value;
         addProjectToProjectList(inputValue);
-        removeProjectBoard();
         render();
         threeDotIconClick();
       } else {

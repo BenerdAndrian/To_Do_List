@@ -17,6 +17,7 @@ body{
     grid-template-rows:1fr 5fr 0.5fr;
     width:100vw;
     height:100vh;
+    
 }
 header{
   grid-row:1/2;
@@ -97,8 +98,8 @@ main{
 .mainPart{
     grid-row:2/3;
     padding:2rem 10rem;
-    overflow:hidden;
-    scroll-behavior:auto;
+    height:100vh;
+    overflow:auto;
 }
 
 footer{
