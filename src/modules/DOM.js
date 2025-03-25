@@ -262,8 +262,12 @@ export const Event_handle = () => {
       if (taskList.length > 0) {
         console.log(taskList);
         renderTask(taskList);
+        //add data to task
+        const tasks = document.querySelectorAll(".task");
+        addDataIntoElement(tasks);
       }
       addTaskIconClick(projectID);
+      taskThreeDotsIconClick();
     }
   }
   function renderTask(taskList) {
@@ -629,14 +633,40 @@ export const Event_handle = () => {
     const projects = JSON.parse(localStorage.getItem("projects"));
     console.log(projects);
   }
-  // function taskThreeDotsIconClick() {
-  //   const dotIcon = document.querySelectorAll(".taskList .task .threeDotIcon");
-  //   dotIcon.forEach((icon) => {
-  //     icon.addEventListener("click", () => {
-  //       displayTaskOptionBox(index);
-  //     });
-  //   });
-  // }
+  function taskThreeDotsIconClick() {
+    const dotIcon = document.querySelectorAll(".taskList .task .threeDotIcon");
+    dotIcon.forEach((icon) => {
+      icon.addEventListener("click", (e) => {
+        const index = Number(e.target.parentNode.dataset.index);
+        removeCurrentProjectOptionBox();
+        displayTaskOptionBox(index);
+      });
+    });
+  }
+  function displayTaskOptionBox(index) {
+    const tasks = document.querySelectorAll(".taskList .task");
+    tasks.forEach((task, i) => {
+      if (i === index) {
+        console.log("fn");
+        const ul = document.createElement("ul");
+        ul.setAttribute("class", "projectOptionBox");
+        const optionList1 = document.createElement("li");
+        const optionList2 = document.createElement("li");
+        const updateBtn = document.createElement("button");
+        const deleteBtn = document.createElement("button");
+        updateBtn.textContent = "Update";
+        deleteBtn.textContent = "Delete";
+        updateBtn.setAttribute("class", "taskUpdateBtn");
+        deleteBtn.setAttribute("class", "taskDeleteBtn");
+        optionList1.appendChild(updateBtn);
+        optionList2.appendChild(deleteBtn);
+        ul.appendChild(optionList1);
+        ul.appendChild(optionList2);
+        task.appendChild(ul);
+        console.log("fen");
+      }
+    });
+  }
   return {
     displayProject,
     displayCategory,
