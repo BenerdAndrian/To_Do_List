@@ -217,9 +217,14 @@ footer img{
     margin-right:2rem;
     margin-left:2rem;
 }
-.taskList .task p :not(.priorityLevelUI){
+/* .taskList .task p:not(.priorityLevelUI){
     flex:1;
     font-size:1.25rem;
+} */
+.taskList .task p{
+    flex:1;
+    font-size:1.3rem;
+    text-align:left;
 }
 .addIconProject{
     width:50px;

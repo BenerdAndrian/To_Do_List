@@ -251,7 +251,7 @@ export const Event_handle = () => {
       const img = document.createElement("img");
       img.src = threeDots;
       img.setAttribute("class", "threeDotIcon");
-      const fixedLength = 40;
+      const fixedLength = 30;
       const taskNameLength = task.taskName.length;
       const taskDetailLength = task.taskDetail.length;
       const taskName = display3DotsForRestOfText(
@@ -514,9 +514,9 @@ export const Event_handle = () => {
     detailInput.cols = 30;
     detailInput.placeholder = "Describe Task Information Or Task's Notes...";
 
-    nameInput.required = "";
-    priorityInput.required = "";
-    duedateInput.required = "";
+    nameInput.required = true;
+    priorityInput.required = true;
+    duedateInput.required = true;
     const closeButton = document.createElement("button");
     const addButton = document.createElement("button");
     closeButton.setAttribute("class", "taskAddBoardCloseBtn");
@@ -570,14 +570,16 @@ export const Event_handle = () => {
     taskAddBoardBtn.addEventListener("click", (e) => {
       e.preventDefault();
       if (form.checkValidity()) {
+        console.log(form.checkValidity());
         console.log("hello kitty");
         projects.forEach((project, i) => {
           //check if projectID taking from the time clicking on project showing is the same with project inside projectList in localstorage
-          if (projectID === i) {
+          if (Number(projectID) === i) {
+            console.log("toi bi khung");
             // if true then add task with new info into taskList array of the project
             const taskLength = project.taskList.length;
             project.taskList.push({
-              taskID: taskLength.value,
+              taskID: taskLength,
               taskName: nameInput.value,
               taskPriority: priorityInput.value,
               taskDuedate: duedateInput.value,
@@ -586,8 +588,11 @@ export const Event_handle = () => {
             //reset the localstorage to update latest data
             localStorage.setItem("projects", JSON.stringify(projects));
             render();
+            threeDotIconClick();
           }
         });
+      } else {
+        form.reportValidity();
       }
     });
   }
