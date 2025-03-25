@@ -7,6 +7,7 @@ import Upcoming from "../asset/images/Upcoming.svg";
 import threeDots from "../asset/images/3dots.svg";
 import addIcon from "../asset/images/addIcon.svg";
 import closeIcon from "../asset/images/closeIcon.svg";
+import gitLogo from "../asset/images/gitLogo.svg";
 import { addProjectToProjectList } from "./projects.js";
 
 export const render = () => {
@@ -43,7 +44,13 @@ export const DOM_generate = () => {
     const footer = document.createElement("footer");
     const p = document.createElement("p");
     p.textContent = "Created By Michael Ben";
+    const a = document.createElement("a");
+    a.href = "https://github.com/BenerdAndrian";
+    const img = document.createElement("img");
+    img.src = gitLogo;
+    a.appendChild(img);
     footer.appendChild(p);
+    footer.appendChild(a);
     body.appendChild(footer);
   }
   function mainSidebarDOMGenerate() {
