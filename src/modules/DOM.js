@@ -11,6 +11,14 @@ import gitLogo from "../asset/images/gitLogo.svg";
 import addTaskIcon from "../asset/images/addTask.svg";
 import { addProjectToProjectList, processProjectID } from "./projects.js";
 
+function display3DotsForRestOfText(string, stringLength, fixedLength) {
+  if (stringLength > fixedLength) {
+    return string.substring(0, fixedLength) + "...";
+  } else {
+    return string;
+  }
+}
+
 export const render = () => {
   const body = document.querySelector("body");
   body.innerHTML = "";
@@ -81,7 +89,13 @@ export const DOM_generate = () => {
       image.setAttribute("class", "threeDotIcon");
       const li = document.createElement("li");
       const h3 = document.createElement("h3");
-      h3.textContent = `${project.name}`;
+      const fixedLength = 25;
+      const projectName = display3DotsForRestOfText(
+        project.name,
+        project.name.length,
+        fixedLength,
+      );
+      h3.textContent = `${projectName}`;
       li.appendChild(h3);
       li.appendChild(image);
       ul.appendChild(li);
@@ -212,7 +226,11 @@ export const Event_handle = () => {
     const div = document.createElement("div");
     div.setAttribute("class", "taskHeader");
     const h2 = document.createElement("h2");
-    const name = project.name;
+    const name = display3DotsForRestOfText(
+      project.name,
+      project.name.length,
+      60,
+    );
     h2.textContent = name;
     div.appendChild(h2);
     const img = document.createElement("img");
@@ -251,7 +269,7 @@ export const Event_handle = () => {
       const img = document.createElement("img");
       img.src = threeDots;
       img.setAttribute("class", "threeDotIcon");
-      const fixedLength = 30;
+      const fixedLength = 20;
       const taskNameLength = task.taskName.length;
       const taskDetailLength = task.taskDetail.length;
       const taskName = display3DotsForRestOfText(
@@ -283,13 +301,7 @@ export const Event_handle = () => {
     else if (priority === "Medium") return "rgb(185, 159, 13)";
     else return "green";
   }
-  function display3DotsForRestOfText(string, stringLength, fixedLength) {
-    if (stringLength > fixedLength) {
-      return string.substring(0, fixedLength) + "...";
-    } else {
-      return string;
-    }
-  }
+
   function addIconProjectClick() {
     const addIconProject = document.querySelector(".addIconProject");
     addIconProject.addEventListener("click", () => {
