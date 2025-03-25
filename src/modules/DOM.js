@@ -221,6 +221,7 @@ export const Event_handle = () => {
     img.setAttribute("class", "addTaskIcon");
     div.appendChild(img);
     mainPart.insertBefore(div, taskListDOM);
+    addTaskIconClick();
     if (project) {
       const taskList = project.taskList;
       console.log(taskList);
@@ -470,6 +471,89 @@ export const Event_handle = () => {
       }
     });
     console.log(projects);
+  }
+  //add task
+  function addTaskIconClick() {
+    const addTaskIcon = document.querySelector(".addTaskIcon");
+    addTaskIcon.addEventListener("click", () => {
+      addBlurLayer();
+      displayAddTaskBoard();
+    });
+  }
+  function displayAddTaskBoard() {
+    const div = document.createElement("div");
+    div.setAttribute("class", "btnTaskBoard");
+    const body = document.querySelector("body");
+    const h2 = document.createElement("h2");
+    h2.textContent = "Task Create";
+
+    const form = document.createElement("form");
+    form.setAttribute("class", "taskAddBoard");
+
+    const nameLabel = document.createElement("label");
+    const priorityLabel = document.createElement("label");
+    const duedateLabel = document.createElement("label");
+    const detailLabel = document.createElement("label");
+
+    const nameInput = document.createElement("input");
+    const priorityInput = document.createElement("select");
+
+    const option1 = document.createElement("option");
+    const option2 = document.createElement("option");
+    const option3 = document.createElement("option");
+    option1.textContent = "High";
+    option2.textContent = "Medium";
+    option3.textContent = "Low";
+    priorityInput.appendChild(option1);
+    priorityInput.appendChild(option2);
+    priorityInput.appendChild(option3);
+
+    const duedateInput = document.createElement("input");
+    const detailInput = document.createElement("textarea");
+    detailInput.rows = 5;
+    detailInput.cols = 30;
+    detailInput.placeholder = "Describe Task Information Or Task's Notes...";
+
+    const closeButton = document.createElement("button");
+    const addButton = document.createElement("button");
+    closeButton.setAttribute("class", "taskAddBoardCloseBtn");
+    addButton.setAttribute("class", "taskAddBoardBtn");
+
+    addButton.textContent = "Add Task";
+    closeButton.textContent = "Cancel";
+
+    nameLabel.htmlFor = "taskNameInput";
+    priorityLabel.htmlFor = "taskPriorityInput";
+    duedateLabel.htmlFor = "taskDuedateInput";
+    detailLabel.htmlFor = "taskDetailInput";
+
+    nameLabel.textContent = `Task's Name: `;
+    priorityLabel.textContent = `Task's Priority: `;
+    duedateLabel.textContent = `Task's Duedate: `;
+    detailLabel.textContent = `Task's Detail: `;
+
+    nameInput.setAttribute("id", "taskNameInput");
+    priorityInput.setAttribute("id", "taskPriorityInput");
+    duedateInput.setAttribute("id", "taskDuedateInput");
+    detailInput.setAttribute("id", "taskDetailInput");
+
+    nameInput.type = "text";
+    duedateInput.type = "date";
+
+    div.appendChild(addButton);
+    div.appendChild(closeButton);
+
+    form.appendChild(h2);
+    form.appendChild(nameLabel);
+    form.appendChild(nameInput);
+    form.appendChild(priorityLabel);
+    form.appendChild(priorityInput);
+    form.appendChild(duedateLabel);
+    form.appendChild(duedateInput);
+    form.appendChild(detailLabel);
+    form.appendChild(detailInput);
+    form.appendChild(div);
+    body.appendChild(form);
   }
   function printProjects() {
     const projects = JSON.parse(localStorage.getItem("projects"));
