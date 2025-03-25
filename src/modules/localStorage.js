@@ -21,7 +21,8 @@ export const projects = [
         taskName: "practice setting up Bundlers & organize file & folder",
         taskPriority: "high",
         taskDuedate: "2025-03-24",
-        taskDetail: "this is the detail content",
+        taskDetail:
+          "this is the detail content,i want to add more to check the function work properly",
         projectID: 2,
       },
     ],

@@ -220,17 +220,47 @@ export const Event_handle = () => {
     taskList.forEach((task) => {
       const li = document.createElement("li");
       li.setAttribute("class", "task");
+      const input = document.createElement("input");
+      input.type = "checkbox";
       const p1 = document.createElement("p");
       const p2 = document.createElement("p");
       const p3 = document.createElement("p");
-      p1.textContent = task.taskName;
+      const p4 = document.createElement("p");
+      const img = document.createElement("img");
+      img.src = threeDots;
+      img.setAttribute("class", "threeDotIcon");
+      const fixedLength = 50;
+      const taskNameLength = task.taskName.length;
+      const taskDetailLength = task.taskDetail.length;
+      const taskName = display3DotsForRestOfText(
+        task.taskName,
+        taskNameLength,
+        fixedLength,
+      );
+      const taskDetail = display3DotsForRestOfText(
+        task.taskDetail,
+        taskDetailLength,
+        fixedLength,
+      );
+      p1.textContent = taskName;
       p2.textContent = task.taskPriority;
       p3.textContent = task.taskDuedate;
+      p4.textContent = taskDetail;
+      li.appendChild(input);
       li.appendChild(p1);
       li.appendChild(p2);
       li.appendChild(p3);
+      li.appendChild(p4);
+      li.appendChild(img);
       taskListDOM.appendChild(li);
     });
+  }
+  function display3DotsForRestOfText(string, stringLength, fixedLength) {
+    if (stringLength > fixedLength) {
+      return string.substring(0, fixedLength) + "...";
+    } else {
+      return string;
+    }
   }
   function addIconProjectClick() {
     const addIconProject = document.querySelector(".addIconProject");

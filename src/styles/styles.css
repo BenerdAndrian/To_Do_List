@@ -1,5 +1,6 @@
 :root{
-    --header-color:#3fa6fa;
+    --header-color:black;
+    --sidebar-color:rgba(46, 42, 42, 0.945);
     --font-header-color:white;
 }
 *{
@@ -34,7 +35,7 @@ main{
     display:grid;
     grid-template-rows:2fr 1fr;
     font-size:1.6rem;
-    background-color:#3fa6fa;
+    background-color:var(--sidebar-color);
 }
 .sidebar .categories{
     grid-row:1/2;
@@ -63,7 +64,7 @@ footer p{
     font-size:1.2rem;
     color:var(--font-header-color)
 }
-.projects li img{
+.threeDotIcon{
     width:25px;
     height:25px;
     margin-right:1rem;
@@ -141,4 +142,13 @@ footer p{
     cursor:pointer;
     font-size:1.2rem;
     font-weight: bold;
+}
+.taskList .task{
+    display:flex;
+    justify-content:space-evenly;
+    background-color:bisque;
+    margin-bottom:2rem;
+}
+.taskList .task p{
+    flex:1;
 }
