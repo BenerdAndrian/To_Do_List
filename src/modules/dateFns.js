@@ -1,4 +1,4 @@
-import { isTomorrow, isToday, isThisWeek, parse } from "date-fns";
+import { isTomorrow, isToday, isThisWeek, parse, isBefore } from "date-fns";
 const today = new Date();
 const todayList = [];
 const tomorrowList = [];
@@ -6,7 +6,13 @@ const thisWeekList = [];
 const upComingList = [];
 const inboxList = [];
 console.log(today);
+
 function categorizeDateTime() {
+  todayList.length = 0;
+  tomorrowList.length = 0;
+  thisWeekList.length = 0;
+  upComingList.length = 0;
+  inboxList.length = 0;
   console.log("ohlala");
   const projects = JSON.parse(localStorage.getItem("projects"));
   console.log("nhan chua");

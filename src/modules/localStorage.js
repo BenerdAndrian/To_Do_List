@@ -14,7 +14,7 @@ export const projects = [
         taskPriority: "High",
         taskDuedate: "2022-04-16",
         taskDetail: "this is the detail content",
-        projectID: 2,
+        projectID: 1,
       },
       {
         taskID: 2,
@@ -23,7 +23,7 @@ export const projects = [
         taskDuedate: "2025-03-27",
         taskDetail:
           "this is the detail content,i want to add more to check the function work properly",
-        projectID: 2,
+        projectID: 1,
       },
     ],
   },

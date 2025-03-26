@@ -20,3 +20,4 @@ const event = Event_handle();
 event.threeDotIconClick();
 // let Projects = localStorage.setItem("projects", JSON.stringify(projects));
 // localStorage.clear();
+console.log(todayList);

@@ -384,7 +384,9 @@ export const Event_handle = () => {
     body.appendChild(form);
   }
   function displayTaskUpdateBoard(projectID, index) {
+    console.log(projectID);
     const projects = JSON.parse(localStorage.getItem("projects"));
+    console.log(projectID);
     displayTaskBoard(projectID, "Update Task", false);
     const nameInput = document.querySelector("#taskNameInput");
     const priorityInput = document.querySelector("#taskPriorityInput");
@@ -405,6 +407,7 @@ export const Event_handle = () => {
     div.setAttribute("class", "blurLayer");
     const body = document.querySelector("body");
     body.appendChild(div);
+    console.log("sole sole");
   }
   function closeBoard(closeBtn, board) {
     console.log("i");
@@ -514,6 +517,7 @@ export const Event_handle = () => {
     const updateBtn = document.querySelector(".projectUpdateBtn");
     updateBtn.addEventListener("click", () => {
       addBlurLayer();
+
       displayProjectInfoAddBoard();
       updateCurrentProject(index);
       const closeBtn = document.querySelector(".closeBtn");
@@ -735,14 +739,22 @@ export const Event_handle = () => {
       icon.addEventListener("click", (e) => {
         const index = Number(e.target.parentNode.dataset.index);
         removeCurrentProjectOptionBox();
-        displayTaskOptionBox(projectID, index);
+        displayTaskOptionBoxAndHandleEvent(projectID, index);
       });
     });
   }
-  function displayTaskOptionBox(projectID, index) {
+  function displayTaskOptionBoxAndHandleEvent(projectID, index) {
+    displayTaskOptionBox(index);
+    taskUpdateBtnClick(projectID, index);
+    deleteCurrentTaskBtnClick(projectID, index);
+  }
+  function displayTaskOptionBox(index) {
+    console.log("kakakakaakaka");
     const tasks = document.querySelectorAll(".taskList .task");
     tasks.forEach((task, i) => {
-      if (i === index) {
+      console.log("kikiki");
+      console.log(i);
+      if (i === Number(index)) {
         console.log("fn");
         const ul = document.createElement("ul");
         ul.setAttribute("class", "projectOptionBox");
@@ -760,8 +772,6 @@ export const Event_handle = () => {
         ul.appendChild(optionList2);
         task.appendChild(ul);
         console.log("fen");
-        taskUpdateBtnClick(projectID, index);
-        deleteCurrentTaskBtnClick(projectID, index);
       }
     });
   }
@@ -771,6 +781,8 @@ export const Event_handle = () => {
     taskUpdateBtn.addEventListener("click", () => {
       addBlurLayer();
       displayTaskUpdateBoard(projectID, index);
+      console.log("salim");
+      console.log(projectID);
       updateCurrentTaskBtnClick(projectID, index);
       console.log("rai tham");
     });
@@ -803,9 +815,11 @@ export const Event_handle = () => {
       e.preventDefault();
       console.log("lolo");
       if (form.checkValidity()) {
+        console.log("lalisa");
         projects.forEach((project, i) => {
+          console.log(projectID);
           if (i === Number(projectID)) {
-            console.log("mami");
+            console.log("mamilll");
             project.taskList[index] = {
               taskID: index,
               taskName: newNameInput.value,
@@ -853,12 +867,30 @@ export const Event_handle = () => {
 
       addTaskIconClick(-1, true);
       // taskThreeDotsIconClick(projectID);
-      // threeDotIconClick();
+      taskThreeDotsCategoryIconClick(list);
     }
   }
-  // function taskIconClickOnCategory(){
-  //   const
-  // }
+  function taskThreeDotsCategoryIconClick(list) {
+    console.log(list);
+    const threeDotIcon = document.querySelectorAll(".taskThreeDotIcon");
+    threeDotIcon.forEach((icon, index) => {
+      icon.addEventListener("click", () => {
+        removeCurrentProjectOptionBox();
+        console.log("vi tri click : " + index);
+        displayTaskOptionBox(index);
+        theFunction(list, index);
+      });
+    });
+  }
+  function theFunction(list, index) {
+    list.forEach((task, i) => {
+      console.log(task);
+      if (i === index) {
+        taskUpdateBtnClick(task.projectID, task.taskID);
+      }
+    });
+  }
+
   function todayCategoryClick() {
     const todayBtn = document.querySelector(".Today");
     todayBtn.addEventListener("click", () => {
@@ -869,12 +901,6 @@ export const Event_handle = () => {
     const tomorrowBtn = document.querySelector(".Tomorrow");
     tomorrowBtn.addEventListener("click", () => {
       renderTaskListBaseOnCategory("Tomorrow", tomorrowList);
-    });
-  }
-  function inboxClick() {
-    const inboxBtn = document.querySelector(".Inbox");
-    inboxBtn.addEventListener("click", () => {
-      renderTaskListBaseOnCategory("Inbox", inboxList);
     });
   }
   return {
