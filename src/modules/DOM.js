@@ -489,7 +489,7 @@ export const Event_handle = () => {
           projects.splice(i, 1);
           localStorage.setItem("projects", JSON.stringify(projects));
           processProjectID();
-          render();
+          re_render(index);
           threeDotIconClick();
         }
       });
@@ -523,7 +523,7 @@ export const Event_handle = () => {
             console.log(project.name);
           }
           localStorage.setItem("projects", JSON.stringify(projects));
-          render();
+          re_render(index);
           threeDotIconClick();
         });
       } else {

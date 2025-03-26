@@ -123,6 +123,7 @@ footer img{
 .projectThreeDotIcon,.taskThreeDotIcon{
     width:25px;
     height:25px;
+    cursor:pointer;
     margin-right:1rem;
 }
 .projects li h3{
