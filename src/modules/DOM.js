@@ -496,6 +496,9 @@ export const Event_handle = () => {
       addBlurLayer();
       displayProjectInfoAddBoard();
       updateCurrentProject(index);
+      const closeBtn = document.querySelector(".closeBtn");
+      const projectAddBoard = document.querySelector(".projectAddBoard");
+      closeBoard(closeBtn, projectAddBoard);
     });
   }
   function updateCurrentProject(index) {
@@ -739,6 +742,8 @@ export const Event_handle = () => {
             };
             localStorage.setItem("projects", JSON.stringify(projects));
             render();
+            threeDotIconClick();
+            taskThreeDotsIconClick();
           }
         });
       } else {
