@@ -10,6 +10,14 @@ import closeIcon from "../asset/images/closeIcon.svg";
 import gitLogo from "../asset/images/gitLogo.svg";
 import addTaskIcon from "../asset/images/addTask.svg";
 import {
+  todayList,
+  tomorrowList,
+  thisWeekList,
+  upComingList,
+  inboxList,
+  categorizeDateTime,
+} from "./dateFns.js";
+import {
   addProjectToProjectList,
   processProjectID,
   processTaskID,
@@ -40,6 +48,9 @@ const re_render = (index) => {
   event.printProjects();
   event.taskThreeDotsIconClick();
   event.clickOutsideOfProjectOptionBox();
+  categorizeDateTime();
+  event.todayCategoryClick();
+  event.tomorrowCategoryClick();
   if (index) {
     event.renderProject(index);
   }
@@ -60,6 +71,9 @@ export const render = () => {
   event.addIconProjectClick();
   event.printProjects();
   event.clickOutsideOfProjectOptionBox();
+  categorizeDateTime();
+  event.todayCategoryClick();
+  event.tomorrowCategoryClick();
 };
 export const DOM_generate = () => {
   const body = document.querySelector("body");
@@ -144,6 +158,7 @@ export const DOM_generate = () => {
     categories.forEach((category) => {
       const h3 = document.createElement("h3");
       const li = document.createElement("li");
+      li.setAttribute("class", `${category}`);
       const image = document.createElement("img");
       const url = displayIcon(category);
       image.src = url;
@@ -757,6 +772,55 @@ export const Event_handle = () => {
       }
     });
   }
+  function renderTaskListBaseOnCategory(category, list) {
+    const mainPart = document.querySelector(".mainPart");
+    mainPart.innerHTML = "";
+    const taskListDOM = document.createElement("ul");
+    taskListDOM.setAttribute("class", "taskList");
+    mainPart.appendChild(taskListDOM);
+    const div = document.createElement("div");
+    div.setAttribute("class", "taskHeader");
+    const h2 = document.createElement("h2");
+    h2.textContent = category;
+    div.appendChild(h2);
+    const img = document.createElement("img");
+    img.src = addTaskIcon;
+    img.alt = "add Task Icon";
+    img.setAttribute("class", "addTaskIcon");
+    div.appendChild(img);
+    mainPart.insertBefore(div, taskListDOM);
+    if (list) {
+      const taskList = list;
+      if (taskList.length > 0) {
+        console.log(taskList);
+        renderTask(taskList);
+        //add data to task
+        const tasks = document.querySelectorAll(".task");
+        addDataIntoElement(tasks);
+      }
+      // addTaskIconClick(projectID);
+      // taskThreeDotsIconClick(projectID);
+      // threeDotIconClick();
+    }
+  }
+  function todayCategoryClick() {
+    const todayBtn = document.querySelector(".Today");
+    todayBtn.addEventListener("click", () => {
+      renderTaskListBaseOnCategory("Today", todayList);
+    });
+  }
+  function tomorrowCategoryClick() {
+    const tomorrowBtn = document.querySelector(".Tomorrow");
+    tomorrowBtn.addEventListener("click", () => {
+      renderTaskListBaseOnCategory("Tomorrow", tomorrowList);
+    });
+  }
+  function inboxClick() {
+    const inboxBtn = document.querySelector(".Inbox");
+    inboxBtn.addEventListener("click", () => {
+      renderTaskListBaseOnCategory("Inbox", inboxList);
+    });
+  }
   return {
     displayProject,
     displayCategory,
@@ -767,6 +831,8 @@ export const Event_handle = () => {
     addDataIntoElement,
     renderProject,
     taskThreeDotsIconClick,
+    todayCategoryClick,
+    tomorrowCategoryClick,
   };
 };
 const dom = DOM_generate();

@@ -20,6 +20,3 @@ const event = Event_handle();
 event.threeDotIconClick();
 // let Projects = localStorage.setItem("projects", JSON.stringify(projects));
 // localStorage.clear();
-categorizeDateTime();
-console.log("this is today list: " + todayList);
-console.log("this is tomorrow List: " + tomorrowList);

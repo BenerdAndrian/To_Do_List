@@ -4,7 +4,7 @@ const todayList = [];
 const tomorrowList = [];
 const thisWeekList = [];
 const upComingList = [];
-
+const inboxList = [];
 console.log(today);
 function categorizeDateTime() {
   console.log("ohlala");
@@ -37,5 +37,6 @@ export {
   tomorrowList,
   thisWeekList,
   upComingList,
+  inboxList,
   categorizeDateTime,
 };
