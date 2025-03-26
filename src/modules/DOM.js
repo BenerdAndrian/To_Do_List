@@ -267,7 +267,7 @@ export const Event_handle = () => {
         addDataIntoElement(tasks);
       }
       addTaskIconClick(projectID);
-      taskThreeDotsIconClick();
+      taskThreeDotsIconClick(projectID);
     }
   }
   function renderTask(taskList) {
@@ -508,10 +508,11 @@ export const Event_handle = () => {
     const addTaskIcon = document.querySelector(".addTaskIcon");
     addTaskIcon.addEventListener("click", () => {
       addBlurLayer();
-      displayAddTaskBoard(projectID);
+      displayTaskBoard(projectID, "Add Task");
+      pushNewTaskToTaskList(projectID);
     });
   }
-  function displayAddTaskBoard(projectID) {
+  function displayTaskBoard(projectID, purpose) {
     const div = document.createElement("div");
     div.setAttribute("class", "btnTaskBoard");
     const body = document.querySelector("body");
@@ -549,11 +550,11 @@ export const Event_handle = () => {
     priorityInput.required = true;
     duedateInput.required = true;
     const closeButton = document.createElement("button");
-    const addButton = document.createElement("button");
+    const submitBtn = document.createElement("button");
     closeButton.setAttribute("class", "taskAddBoardCloseBtn");
-    addButton.setAttribute("class", "taskAddBoardBtn");
+    submitBtn.setAttribute("class", "taskAddBoardBtn");
 
-    addButton.textContent = "Add Task";
+    submitBtn.textContent = purpose;
     closeButton.textContent = "Cancel";
 
     nameLabel.htmlFor = "taskNameInput";
@@ -574,7 +575,7 @@ export const Event_handle = () => {
     nameInput.type = "text";
     duedateInput.type = "date";
 
-    div.appendChild(addButton);
+    div.appendChild(submitBtn);
     div.appendChild(closeButton);
 
     form.appendChild(h2);
@@ -588,11 +589,9 @@ export const Event_handle = () => {
     form.appendChild(detailInput);
     form.appendChild(div);
     body.appendChild(form);
-    taskAddBoardBtnAddClick(projectID);
     closeBoard(closeButton, form);
   }
-
-  function taskAddBoardBtnAddClick(projectID) {
+  function pushNewTaskToTaskList(projectID) {
     const projects = JSON.parse(localStorage.getItem("projects"));
     const taskAddBoardBtn = document.querySelector(".taskAddBoardBtn");
     const form = document.querySelector(".taskAddBoard");
@@ -633,17 +632,17 @@ export const Event_handle = () => {
     const projects = JSON.parse(localStorage.getItem("projects"));
     console.log(projects);
   }
-  function taskThreeDotsIconClick() {
+  function taskThreeDotsIconClick(projectID) {
     const dotIcon = document.querySelectorAll(".taskList .task .threeDotIcon");
     dotIcon.forEach((icon) => {
       icon.addEventListener("click", (e) => {
         const index = Number(e.target.parentNode.dataset.index);
         removeCurrentProjectOptionBox();
-        displayTaskOptionBox(index);
+        displayTaskOptionBox(projectID, index);
       });
     });
   }
-  function displayTaskOptionBox(index) {
+  function displayTaskOptionBox(projectID, index) {
     const tasks = document.querySelectorAll(".taskList .task");
     tasks.forEach((task, i) => {
       if (i === index) {
@@ -664,6 +663,53 @@ export const Event_handle = () => {
         ul.appendChild(optionList2);
         task.appendChild(ul);
         console.log("fen");
+        taskUpdateBtnClick(projectID, index);
+      }
+    });
+  }
+
+  function taskUpdateBtnClick(projectID, index) {
+    const taskUpdateBtn = document.querySelector(".taskUpdateBtn");
+    taskUpdateBtn.addEventListener("click", () => {
+      addBlurLayer();
+      displayTaskBoard(projectID, "Update Task");
+      updateCurrentTaskBtnClick(projectID, index);
+      // deleteCurrentTaskBtnClick(projectID, index);
+      console.log("rai tham");
+    });
+  }
+  // function deleteCurrentTaskBtnClick(projectID,index){
+  //   const deleteBtn=document.querySelector('.')
+  // }
+  function updateCurrentTaskBtnClick(projectID, index) {
+    console.log("duoc ko");
+    const projects = JSON.parse(localStorage.getItem("projects"));
+    const taskSubmitBtn = document.querySelector(".taskAddBoardBtn");
+    const form = document.querySelector(".taskAddBoard");
+    const newNameInput = document.querySelector("#taskNameInput");
+    const newPriorityInput = document.querySelector("#taskPriorityInput");
+    const newDuedateInput = document.querySelector("#taskDuedateInput");
+    const newDetailInput = document.querySelector("#taskDetailInput");
+    taskSubmitBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("lolo");
+      if (form.checkValidity()) {
+        projects.forEach((project, i) => {
+          if (i === Number(projectID)) {
+            console.log("mami");
+            project.taskList[index] = {
+              taskID: index,
+              taskName: newNameInput.value,
+              taskPriority: newPriorityInput.value,
+              taskDuedate: newDuedateInput.value,
+              taskDetail: newDetailInput.value,
+            };
+            localStorage.setItem("projects", JSON.stringify(projects));
+            render();
+          }
+        });
+      } else {
+        form.reportValidity();
       }
     });
   }
