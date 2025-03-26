@@ -363,6 +363,23 @@ export const Event_handle = () => {
     form.appendChild(submitBtn);
     body.appendChild(form);
   }
+  function displayTaskUpdateBoard(projectID, index) {
+    const projects = JSON.parse(localStorage.getItem("projects"));
+    displayTaskBoard(projectID, "Update Task");
+    const nameInput = document.querySelector("#taskNameInput");
+    const priorityInput = document.querySelector("#taskPriorityInput");
+    const duedateInput = document.querySelector("#taskDuedateInput");
+    const detailInput = document.querySelector("#taskDetailInput");
+    projects.forEach((project, i) => {
+      if (i === Number(projectID)) {
+        const task = project.taskList[index];
+        nameInput.value = task.taskName;
+        priorityInput.value = task.taskPriority;
+        duedateInput.value = task.taskDuedate;
+        detailInput.value = task.taskDetail;
+      }
+    });
+  }
   function addBlurLayer() {
     const div = document.createElement("div");
     div.setAttribute("class", "blurLayer");
@@ -521,7 +538,7 @@ export const Event_handle = () => {
     div.setAttribute("class", "btnTaskBoard");
     const body = document.querySelector("body");
     const h2 = document.createElement("h2");
-    h2.textContent = "Task Create";
+    h2.textContent = purpose;
 
     const form = document.createElement("form");
     form.setAttribute("class", "taskAddBoard");
@@ -677,7 +694,7 @@ export const Event_handle = () => {
     const taskUpdateBtn = document.querySelector(".taskUpdateBtn");
     taskUpdateBtn.addEventListener("click", () => {
       addBlurLayer();
-      displayTaskBoard(projectID, "Update Task");
+      displayTaskUpdateBoard(projectID, index);
       updateCurrentTaskBtnClick(projectID, index);
       console.log("rai tham");
     });
