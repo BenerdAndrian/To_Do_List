@@ -9,7 +9,11 @@ import addIcon from "../asset/images/addIcon.svg";
 import closeIcon from "../asset/images/closeIcon.svg";
 import gitLogo from "../asset/images/gitLogo.svg";
 import addTaskIcon from "../asset/images/addTask.svg";
-import { addProjectToProjectList, processProjectID } from "./projects.js";
+import {
+  addProjectToProjectList,
+  processProjectID,
+  processTaskID,
+} from "./projects.js";
 
 function display3DotsForRestOfText(string, stringLength, fixedLength) {
   if (stringLength > fixedLength) {
@@ -664,6 +668,7 @@ export const Event_handle = () => {
         task.appendChild(ul);
         console.log("fen");
         taskUpdateBtnClick(projectID, index);
+        deleteCurrentTaskBtnClick(projectID, index);
       }
     });
   }
@@ -674,13 +679,24 @@ export const Event_handle = () => {
       addBlurLayer();
       displayTaskBoard(projectID, "Update Task");
       updateCurrentTaskBtnClick(projectID, index);
-      // deleteCurrentTaskBtnClick(projectID, index);
       console.log("rai tham");
     });
   }
-  // function deleteCurrentTaskBtnClick(projectID,index){
-  //   const deleteBtn=document.querySelector('.')
-  // }
+  function deleteCurrentTaskBtnClick(projectID, index) {
+    const projects = JSON.parse(localStorage.getItem("projects"));
+    const deleteBtn = document.querySelector(".taskDeleteBtn");
+    deleteBtn.addEventListener("click", () => {
+      console.log("loo");
+      projects.forEach((project, i) => {
+        if (Number(projectID) === i) {
+          project.taskList.splice(index, 1);
+          localStorage.setItem("projects", JSON.stringify(projects));
+          processTaskID(projectID);
+          render();
+        }
+      });
+    });
+  }
   function updateCurrentTaskBtnClick(projectID, index) {
     console.log("duoc ko");
     const projects = JSON.parse(localStorage.getItem("projects"));

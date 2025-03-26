@@ -44,7 +44,17 @@ function processProjectID() {
   });
   localStorage.setItem("projects", JSON.stringify(projects));
 }
-
-export { addProjectToProjectList, project, processProjectID };
+function processTaskID(projectID) {
+  let projects = JSON.parse(localStorage.getItem("projects"));
+  projects.forEach((one) => {
+    if (one.id === projectID) {
+      one.taskList.forEach((task, index) => {
+        task.taskID = index;
+      });
+      localStorage.setItem("projects", JSON.stringify(projects));
+    }
+  });
+}
+export { addProjectToProjectList, project, processProjectID, processTaskID };
 const project1 = new project(1, "bake a cake");
 project1.displayProject();
