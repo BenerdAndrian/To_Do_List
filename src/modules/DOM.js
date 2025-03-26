@@ -33,12 +33,16 @@ const re_render = (index) => {
   DOM.mainSidebarDOMGenerate();
   DOM.renderMainContent();
   DOM.footerDOMGenerate();
-  event.addDataIntoElement();
+  const projectList = document.querySelectorAll(".projects h3");
+  event.addDataIntoElement(projectList);
   event.displayProject();
   event.addIconProjectClick();
   event.printProjects();
+  event.taskThreeDotsIconClick();
   event.clickOutsideOfProjectOptionBox();
-  event.renderProject(index);
+  if (index) {
+    event.renderProject(index);
+  }
 };
 export const render = () => {
   const body = document.querySelector("body");
@@ -108,7 +112,7 @@ export const DOM_generate = () => {
     projects.forEach((project) => {
       const image = document.createElement("img");
       image.src = threeDots;
-      image.setAttribute("class", "threeDotIcon");
+      image.setAttribute("class", "projectThreeDotIcon");
       const li = document.createElement("li");
       const h3 = document.createElement("h3");
       const fixedLength = 25;
@@ -272,6 +276,7 @@ export const Event_handle = () => {
       }
       addTaskIconClick(projectID);
       taskThreeDotsIconClick(projectID);
+      threeDotIconClick();
     }
   }
   function renderTask(taskList) {
@@ -293,7 +298,7 @@ export const Event_handle = () => {
       const p4 = document.createElement("p");
       const img = document.createElement("img");
       img.src = threeDots;
-      img.setAttribute("class", "threeDotIcon");
+      img.setAttribute("class", "taskThreeDotIcon");
       const fixedLength = 20;
       const taskNameLength = task.taskName.length;
       const taskDetailLength = task.taskDetail.length;
@@ -418,7 +423,7 @@ export const Event_handle = () => {
     });
   }
   function threeDotIconClick() {
-    const threeDotIcon = document.querySelectorAll(".threeDotIcon");
+    const threeDotIcon = document.querySelectorAll(".projectThreeDotIcon");
     threeDotIcon.forEach((threeDot) => {
       threeDot.addEventListener("click", () => {
         const prevSibling = threeDot.previousElementSibling;
@@ -643,8 +648,8 @@ export const Event_handle = () => {
             });
             //reset the localstorage to update latest data
             localStorage.setItem("projects", JSON.stringify(projects));
-            render();
-            threeDotIconClick();
+            re_render(projectID);
+            taskThreeDotsIconClick(projectID);
           }
         });
       } else {
@@ -657,7 +662,9 @@ export const Event_handle = () => {
     console.log(projects);
   }
   function taskThreeDotsIconClick(projectID) {
-    const dotIcon = document.querySelectorAll(".taskList .task .threeDotIcon");
+    const dotIcon = document.querySelectorAll(
+      ".taskList .task .taskThreeDotIcon",
+    );
     dotIcon.forEach((icon) => {
       icon.addEventListener("click", (e) => {
         const index = Number(e.target.parentNode.dataset.index);
@@ -712,7 +719,7 @@ export const Event_handle = () => {
           project.taskList.splice(index, 1);
           localStorage.setItem("projects", JSON.stringify(projects));
           processTaskID(projectID);
-          render();
+          re_render(projectID);
         }
       });
     });
@@ -741,9 +748,8 @@ export const Event_handle = () => {
               taskDetail: newDetailInput.value,
             };
             localStorage.setItem("projects", JSON.stringify(projects));
-            render();
-            threeDotIconClick();
-            taskThreeDotsIconClick();
+            re_render(projectID);
+            taskThreeDotsIconClick(projectID);
           }
         });
       } else {
@@ -759,6 +765,8 @@ export const Event_handle = () => {
     threeDotIconClick,
     clickOutsideOfProjectOptionBox,
     addDataIntoElement,
+    renderProject,
+    taskThreeDotsIconClick,
   };
 };
 const dom = DOM_generate();
