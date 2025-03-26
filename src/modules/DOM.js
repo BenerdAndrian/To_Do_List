@@ -289,7 +289,7 @@ export const Event_handle = () => {
         const tasks = document.querySelectorAll(".task");
         addDataIntoElement(tasks);
       }
-      addTaskIconClick(projectID);
+      addTaskIconClick(projectID, false);
       taskThreeDotsIconClick(projectID);
       threeDotIconClick();
     }
@@ -385,7 +385,7 @@ export const Event_handle = () => {
   }
   function displayTaskUpdateBoard(projectID, index) {
     const projects = JSON.parse(localStorage.getItem("projects"));
-    displayTaskBoard(projectID, "Update Task");
+    displayTaskBoard(projectID, "Update Task", false);
     const nameInput = document.querySelector("#taskNameInput");
     const priorityInput = document.querySelector("#taskPriorityInput");
     const duedateInput = document.querySelector("#taskDuedateInput");
@@ -548,15 +548,15 @@ export const Event_handle = () => {
     console.log(projects);
   }
   //add task
-  function addTaskIconClick(projectID) {
+  function addTaskIconClick(projectID, bool) {
     const addTaskIcon = document.querySelector(".addTaskIcon");
     addTaskIcon.addEventListener("click", () => {
       addBlurLayer();
-      displayTaskBoard(projectID, "Add Task");
+      displayTaskBoard(projectID, "Add Task", bool);
       pushNewTaskToTaskList(projectID);
     });
   }
-  function displayTaskBoard(projectID, purpose) {
+  function displayTaskBoard(projectID, purpose, boolValue) {
     const div = document.createElement("div");
     div.setAttribute("class", "btnTaskBoard");
     const body = document.querySelector("body");
@@ -634,7 +634,26 @@ export const Event_handle = () => {
     form.appendChild(div);
     body.appendChild(form);
     closeBoard(closeButton, form);
+    //divide into 2 cases, true when taskAddBoard triggers in general project mainPart, one for the category render which we have to define which project the new task would go to.
+    if (boolValue) {
+      const projectLabel = document.createElement("label");
+      projectLabel.textContent = "Choose Project to insert: ";
+      projectLabel.HTMLFor = "projectChoosing";
+      const projectListInput = document.createElement("select");
+      projectListInput.setAttribute("id", "projectChoosing");
+      const projects = JSON.parse(localStorage.getItem("projects"));
+      projects.forEach((project, i) => {
+        const option = document.createElement("option");
+        option.innerText = project.name;
+        option.setAttribute("class", "projectOption");
+        option.setAttribute("data-index", i);
+        projectListInput.appendChild(option);
+      });
+      form.appendChild(projectLabel);
+      form.appendChild(projectListInput);
+    }
   }
+
   function pushNewTaskToTaskList(projectID) {
     const projects = JSON.parse(localStorage.getItem("projects"));
     const taskAddBoardBtn = document.querySelector(".taskAddBoardBtn");
@@ -643,34 +662,66 @@ export const Event_handle = () => {
     const priorityInput = document.querySelector("#taskPriorityInput");
     const duedateInput = document.querySelector("#taskDuedateInput");
     const detailInput = document.querySelector("#taskDetailInput");
-    taskAddBoardBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      if (form.checkValidity()) {
-        console.log(form.checkValidity());
-        console.log("hello kitty");
-        projects.forEach((project, i) => {
-          //check if projectID taking from the time clicking on project showing is the same with project inside projectList in localstorage
-          if (Number(projectID) === i) {
-            console.log("toi bi khung");
-            // if true then add task with new info into taskList array of the project
-            const taskLength = project.taskList.length;
-            project.taskList.push({
-              taskID: taskLength,
-              taskName: nameInput.value,
-              taskPriority: priorityInput.value,
-              taskDuedate: duedateInput.value,
-              taskDetail: detailInput.value,
-            });
-            //reset the localstorage to update latest data
-            localStorage.setItem("projects", JSON.stringify(projects));
-            re_render(projectID);
-            taskThreeDotsIconClick(projectID);
-          }
-        });
-      } else {
-        form.reportValidity();
-      }
-    });
+    //divide it into two cases, one for the add task in general project mainPart, one for the category display mainPart which include project choosing option in the info board
+    if (projectID != -1) {
+      taskAddBoardBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (form.checkValidity()) {
+          console.log(form.checkValidity());
+          console.log("hello kitty");
+          projects.forEach((project, i) => {
+            //check if projectID taking from the time clicking on project showing is the same with project inside projectList in localstorage
+            if (Number(projectID) === i) {
+              console.log("toi bi khung");
+              // if true then add task with new info into taskList array of the project
+              const taskLength = project.taskList.length;
+              project.taskList.push({
+                taskID: taskLength,
+                taskName: nameInput.value,
+                taskPriority: priorityInput.value,
+                taskDuedate: duedateInput.value,
+                taskDetail: detailInput.value,
+                projectID: projectID,
+              });
+              //reset the localstorage to update latest data
+              localStorage.setItem("projects", JSON.stringify(projects));
+              re_render(projectID);
+              taskThreeDotsIconClick(projectID);
+            }
+          });
+        } else {
+          form.reportValidity();
+        }
+      });
+    } else {
+      taskAddBoardBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (form.checkValidity()) {
+          const projectChoosing = document.querySelector("#projectChoosing");
+          const index = Number(
+            projectChoosing.options[projectChoosing.selectedIndex].dataset
+              .index,
+          );
+          console.log(index);
+          console.log(projectChoosing);
+          projects.forEach((project) => {
+            if (index === project.id) {
+              const taskLength = project.taskList.length;
+              project.taskList.push({
+                taskID: taskLength,
+                taskName: nameInput.value,
+                taskPriority: priorityInput.value,
+                taskDuedate: duedateInput.value,
+                taskDetail: detailInput.value,
+                projectID: index,
+              });
+              localStorage.setItem("projects", JSON.stringify(projects));
+              re_render(index);
+            }
+          });
+        }
+      });
+    }
   }
   function printProjects() {
     const projects = JSON.parse(localStorage.getItem("projects"));
@@ -761,6 +812,7 @@ export const Event_handle = () => {
               taskPriority: newPriorityInput.value,
               taskDuedate: newDuedateInput.value,
               taskDetail: newDetailInput.value,
+              projectID: projectID,
             };
             localStorage.setItem("projects", JSON.stringify(projects));
             re_render(projectID);
@@ -798,11 +850,15 @@ export const Event_handle = () => {
         const tasks = document.querySelectorAll(".task");
         addDataIntoElement(tasks);
       }
-      // addTaskIconClick(projectID);
+
+      addTaskIconClick(-1, true);
       // taskThreeDotsIconClick(projectID);
       // threeDotIconClick();
     }
   }
+  // function taskIconClickOnCategory(){
+  //   const
+  // }
   function todayCategoryClick() {
     const todayBtn = document.querySelector(".Today");
     todayBtn.addEventListener("click", () => {
