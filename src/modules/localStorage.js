@@ -9,7 +9,7 @@ export const projects = [
     name: "building javascript projects",
     taskList: [
       {
-        taskID: 1,
+        taskID: 0,
         taskName: "practice setting up evironment",
         taskPriority: "High",
         taskDuedate: "2022-04-16",
@@ -17,7 +17,7 @@ export const projects = [
         projectID: 1,
       },
       {
-        taskID: 2,
+        taskID: 1,
         taskName: "practice setting up Bundlers & organize file & folder",
         taskPriority: "High",
         taskDuedate: "2025-03-27",

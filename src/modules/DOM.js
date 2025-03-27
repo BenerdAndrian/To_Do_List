@@ -394,7 +394,10 @@ export const Event_handle = () => {
     const detailInput = document.querySelector("#taskDetailInput");
     projects.forEach((project, i) => {
       if (i === Number(projectID)) {
-        const task = project.taskList[index];
+        console.log("index can tim " + index);
+        console.log("task can tim: " + project.taskList[index]);
+        const task = project.taskList[Number(index)];
+        console.log("task can tim: " + task);
         nameInput.value = task.taskName;
         priorityInput.value = task.taskPriority;
         duedateInput.value = task.taskDuedate;
@@ -794,6 +797,7 @@ export const Event_handle = () => {
       console.log("loo");
       projects.forEach((project, i) => {
         if (Number(projectID) === i) {
+          console.log("kep");
           project.taskList.splice(index, 1);
           localStorage.setItem("projects", JSON.stringify(projects));
           processTaskID(projectID);
@@ -887,6 +891,8 @@ export const Event_handle = () => {
       console.log(task);
       if (i === index) {
         taskUpdateBtnClick(task.projectID, task.taskID);
+        deleteCurrentTaskBtnClick(task.projectID, task.taskID);
+        console.log("linee");
       }
     });
   }
