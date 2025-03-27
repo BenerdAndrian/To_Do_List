@@ -9,12 +9,14 @@ import addIcon from "../asset/images/addIcon.svg";
 import closeIcon from "../asset/images/closeIcon.svg";
 import gitLogo from "../asset/images/gitLogo.svg";
 import addTaskIcon from "../asset/images/addTask.svg";
+import { changeTaskStateLogic } from "./tasks.js";
 import {
   todayList,
   tomorrowList,
   thisWeekList,
   upComingList,
   inboxList,
+  completeList,
   categorizeDateTime,
 } from "./dateFns.js";
 import {
@@ -296,7 +298,7 @@ export const Event_handle = () => {
     const taskListDOM = document.querySelector(".taskList");
     const mainPart = document.querySelector(".mainPart");
     mainPart.appendChild(taskListDOM);
-    taskList.forEach((task) => {
+    taskList.forEach((task, i) => {
       const li = document.createElement("li");
       li.setAttribute("class", "task");
       const p = document.createElement("p");
@@ -338,8 +340,34 @@ export const Event_handle = () => {
       li.appendChild(p4);
       li.appendChild(img);
       taskListDOM.appendChild(li);
+      checkCompleteDOM(task.taskState, input);
+      taskCompleteEventHandleDOM(task.projectID, i, taskList, input);
     });
   }
+  function checkCompleteDOM(status, input) {
+    if (status === "completed") {
+      input.checked = true;
+      input.parentNode.classList.add("discarded");
+    }
+  }
+  function changeUIForCompleteTask(input) {
+    const parentNode = input.parentNode;
+    parentNode.classList.toggle("discarded");
+  }
+  function check(input) {
+    const parentNode = input.parentNode;
+    const boolValue = parentNode.classList.contains("discarded") ? true : false;
+    return boolValue;
+  }
+  function taskCompleteEventHandleDOM(projectID, i, taskList, input) {
+    input.addEventListener("click", () => {
+      changeUIForCompleteTask(input);
+      const boolValue = check(input);
+      changeTaskStateLogic(taskList, i, boolValue);
+      re_render(projectID);
+    });
+  }
+
   function displayPriorityColor(priority) {
     if (priority === "High") return "rgb(189, 20, 20)";
     else if (priority === "Medium") return "rgb(185, 159, 13)";
@@ -688,6 +716,7 @@ export const Event_handle = () => {
                 taskPriority: priorityInput.value,
                 taskDuedate: duedateInput.value,
                 taskDetail: detailInput.value,
+                taskState: "not complete",
                 projectID: projectID,
               });
               //reset the localstorage to update latest data
@@ -720,6 +749,7 @@ export const Event_handle = () => {
                 taskPriority: priorityInput.value,
                 taskDuedate: duedateInput.value,
                 taskDetail: detailInput.value,
+                taskState: "not complete",
                 projectID: index,
               });
               localStorage.setItem("projects", JSON.stringify(projects));
@@ -830,6 +860,7 @@ export const Event_handle = () => {
               taskPriority: newPriorityInput.value,
               taskDuedate: newDuedateInput.value,
               taskDetail: newDetailInput.value,
+              taskState: "not complete",
               projectID: projectID,
             };
             localStorage.setItem("projects", JSON.stringify(projects));
@@ -922,11 +953,18 @@ export const Event_handle = () => {
       renderTaskListBaseOnCategory("Upcoming", upComingList);
     });
   }
+  function completeCategoryClick() {
+    const completeCategoryBtn = document.querySelector(".Complete");
+    completeCategoryBtn.addEventListener("click", () => {
+      renderTaskListBaseOnCategory("Complete", completeList);
+    });
+  }
   function renderCategory() {
     todayCategoryClick();
     tomorrowCategoryClick();
     thisWeekCategoryClick();
     upComingCategoryClick();
+    completeCategoryClick();
   }
   return {
     displayProject,

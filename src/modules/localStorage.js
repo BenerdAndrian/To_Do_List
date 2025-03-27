@@ -14,6 +14,7 @@ export const projects = [
         taskPriority: "High",
         taskDuedate: "2022-04-16",
         taskDetail: "this is the detail content",
+        taskState: "not complete",
         projectID: 1,
       },
       {
@@ -23,6 +24,7 @@ export const projects = [
         taskDuedate: "2025-03-27",
         taskDetail:
           "this is the detail content,i want to add more to check the function work properly",
+        taskState: "not complete",
         projectID: 1,
       },
     ],
