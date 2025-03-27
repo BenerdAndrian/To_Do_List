@@ -1,19 +1,19 @@
-const path=require ('path');
-const HTMLWebpackPlugin=require('html-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-module.exports={
-  entry:'./src/index.js',
-  output:{
-    filename:'./main.js',
-    path:path.resolve(__dirname,'dist'),
-    clean:true,
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    filename: "./main.js",
+    path: path.resolve(__dirname, "dist"),
+    clean: true,
   },
-  plugins:[
-      new HtmlWebpackPlugin({
-        template:'./src/template.html'
-      })
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/template.html",
+    }),
   ],
-  module:{
+  module: {
     rules: [
       {
         test: /\.css$/i,
@@ -28,6 +28,5 @@ module.exports={
         type: "asset/resource",
       },
     ],
-  }
-  
-}
+  },
+};
