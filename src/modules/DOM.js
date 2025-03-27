@@ -472,12 +472,15 @@ export const Event_handle = () => {
   }
   function threeDotIconClick() {
     const threeDotIcon = document.querySelectorAll(".projectThreeDotIcon");
-    threeDotIcon.forEach((threeDot) => {
+    threeDotIcon.forEach((threeDot, i) => {
       threeDot.addEventListener("click", () => {
         const prevSibling = threeDot.previousElementSibling;
         const index = Number(prevSibling.dataset.index);
         removeCurrentProjectOptionBox();
         displayProjectOptionBox(index);
+        // const mainPart = document.querySelector(".mainPart");
+        // mainPart.innerHTML = "";
+        // renderProject(i);
       });
     });
   }
