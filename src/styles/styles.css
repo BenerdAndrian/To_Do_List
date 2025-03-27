@@ -287,3 +287,7 @@ footer img{
     margin-right:3rem;
     cursor:pointer;
 }
+.discarded{
+    text-decoration:line-through;
+    color:gray;
+}

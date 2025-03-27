@@ -49,8 +49,7 @@ const re_render = (index) => {
   event.taskThreeDotsIconClick();
   event.clickOutsideOfProjectOptionBox();
   categorizeDateTime();
-  event.todayCategoryClick();
-  event.tomorrowCategoryClick();
+  event.renderCategory();
   if (index) {
     event.renderProject(index);
   }
@@ -72,8 +71,7 @@ export const render = () => {
   event.printProjects();
   event.clickOutsideOfProjectOptionBox();
   categorizeDateTime();
-  event.todayCategoryClick();
-  event.tomorrowCategoryClick();
+  event.renderCategory();
 };
 export const DOM_generate = () => {
   const body = document.querySelector("body");
@@ -307,6 +305,7 @@ export const Event_handle = () => {
       p.style.backgroundColor = `${color}`;
       const input = document.createElement("input");
       input.type = "checkbox";
+      input.setAttribute("class", "complete");
       const p1 = document.createElement("p");
       const p2 = document.createElement("p");
       const p3 = document.createElement("p");
@@ -625,7 +624,8 @@ export const Event_handle = () => {
 
     nameInput.type = "text";
     duedateInput.type = "date";
-
+    const today = new Date().toISOString().split("T")[0];
+    duedateInput.min = today;
     div.appendChild(submitBtn);
     div.appendChild(closeButton);
 
@@ -909,6 +909,25 @@ export const Event_handle = () => {
       renderTaskListBaseOnCategory("Tomorrow", tomorrowList);
     });
   }
+  function thisWeekCategoryClick() {
+    const thisWeekBtn = document.querySelector(".Week");
+    thisWeekBtn.addEventListener("click", () => {
+      renderTaskListBaseOnCategory("This Week", thisWeekList);
+    });
+  }
+  function upComingCategoryClick() {
+    const upcomingList = document.querySelector(".Upcoming");
+    upcomingList.addEventListener("click", () => {
+      console.log("nihao");
+      renderTaskListBaseOnCategory("Upcoming", upComingList);
+    });
+  }
+  function renderCategory() {
+    todayCategoryClick();
+    tomorrowCategoryClick();
+    thisWeekCategoryClick();
+    upComingCategoryClick();
+  }
   return {
     displayProject,
     displayCategory,
@@ -919,8 +938,7 @@ export const Event_handle = () => {
     addDataIntoElement,
     renderProject,
     taskThreeDotsIconClick,
-    todayCategoryClick,
-    tomorrowCategoryClick,
+    renderCategory,
   };
 };
 const dom = DOM_generate();
