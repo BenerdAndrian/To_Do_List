@@ -131,7 +131,7 @@ export const DOM_generate = () => {
       image.setAttribute("class", "projectThreeDotIcon");
       const li = document.createElement("li");
       const h3 = document.createElement("h3");
-      const fixedLength = 25;
+      const fixedLength = 20;
       const projectName = display3DotsForRestOfText(
         project.name,
         project.name.length,

@@ -271,11 +271,11 @@ footer img{
 }
 .taskAddBoard label{
     font-size:clamp(1rem,2vw,3rem);
-    margin-top:1.5rem;
+    margin-top:0.5rem;
     margin-bottom:0.4rem;
 }
 .taskAddBoard input,.taskAddBoard select,.taskAddBoard textarea{
-    font-size:clamp(1rem,2vw,3rem);
+    font-size:clamp(1rem,2vw,2rem);
     padding:0.25rem;
 }
 .btnTaskBoard{
@@ -324,7 +324,7 @@ input{
         font-size:1.5rem;
     }
     .taskAddBoard{
-        width:25rem;
+        width:26rem;
     }
     .category li img{
         margin-right:0.25rem;
