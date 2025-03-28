@@ -15,6 +15,9 @@ import "./styles/styles.css";
 const project1 = new project(1, "bake a cakedf");
 const task1 = new task(1, "buy sugar", "high", "today", 1);
 const task2 = new task(2, "buy cream", "medium", "today", 1);
+document.addEventListener("DOMContentLoaded", () => {
+  render();
+});
 render();
 const event = Event_handle();
 event.threeDotIconClick();
