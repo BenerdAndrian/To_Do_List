@@ -255,7 +255,7 @@ export const Event_handle = () => {
     });
   }
   function renderProject(projectID) {
-    const projects = JSON.parse(localStorage.getItem("projects"));
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
     const project = projects.find(
       (theProject) => theProject.id === Number(projectID),
     );
@@ -414,7 +414,7 @@ export const Event_handle = () => {
   }
   function displayTaskUpdateBoard(projectID, index) {
     console.log(projectID);
-    const projects = JSON.parse(localStorage.getItem("projects"));
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
     console.log(projectID);
     displayTaskBoard(projectID, "Update Task", false);
     const nameInput = document.querySelector("#taskNameInput");
@@ -535,7 +535,7 @@ export const Event_handle = () => {
   }
   function projectDeleteBtnClick(index) {
     const deleteBtn = document.querySelector(".projectDeleteBtn");
-    const projects = JSON.parse(localStorage.getItem("projects"));
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
     deleteBtn.addEventListener("click", () => {
       projects.forEach((project, i) => {
         if (i === index) {
@@ -561,7 +561,7 @@ export const Event_handle = () => {
     });
   }
   function updateCurrentProject(index) {
-    const projects = JSON.parse(localStorage.getItem("projects"));
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
     const updateBtn = document.querySelector(".projectSubmitBtn");
 
     updateBtn.addEventListener("click", () => {
@@ -681,7 +681,7 @@ export const Event_handle = () => {
       projectLabel.HTMLFor = "projectChoosing";
       const projectListInput = document.createElement("select");
       projectListInput.setAttribute("id", "projectChoosing");
-      const projects = JSON.parse(localStorage.getItem("projects"));
+      const projects = JSON.parse(localStorage.getItem("projects")) || [];
       projects.forEach((project, i) => {
         const option = document.createElement("option");
         option.innerText = project.name;
@@ -695,7 +695,7 @@ export const Event_handle = () => {
   }
 
   function pushNewTaskToTaskList(projectID) {
-    const projects = JSON.parse(localStorage.getItem("projects"));
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
     const taskAddBoardBtn = document.querySelector(".taskAddBoardBtn");
     const form = document.querySelector(".taskAddBoard");
     const nameInput = document.querySelector("#taskNameInput");
@@ -766,7 +766,7 @@ export const Event_handle = () => {
     }
   }
   function printProjects() {
-    const projects = JSON.parse(localStorage.getItem("projects"));
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
     console.log(projects);
   }
   function taskThreeDotsIconClick(projectID) {
@@ -826,7 +826,7 @@ export const Event_handle = () => {
     });
   }
   function deleteCurrentTaskBtnClick(projectID, index) {
-    const projects = JSON.parse(localStorage.getItem("projects"));
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
     const deleteBtn = document.querySelector(".taskDeleteBtn");
     deleteBtn.addEventListener("click", () => {
       console.log("loo");
@@ -843,7 +843,7 @@ export const Event_handle = () => {
   }
   function updateCurrentTaskBtnClick(projectID, index) {
     console.log("duoc ko");
-    const projects = JSON.parse(localStorage.getItem("projects"));
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
     const taskSubmitBtn = document.querySelector(".taskAddBoardBtn");
     const form = document.querySelector(".taskAddBoard");
     const newNameInput = document.querySelector("#taskNameInput");
