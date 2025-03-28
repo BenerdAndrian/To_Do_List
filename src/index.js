@@ -18,7 +18,7 @@ const task2 = new task(2, "buy cream", "medium", "today", 1);
 document.addEventListener("DOMContentLoaded", () => {
   render();
 });
-render();
+
 const event = Event_handle();
 event.threeDotIconClick();
 // let Projects = localStorage.setItem("projects", JSON.stringify(projects));
