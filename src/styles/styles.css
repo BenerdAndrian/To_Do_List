@@ -27,7 +27,7 @@ header{
   align-items:center;
 }
 header h1{
-    font-size:3.3rem;
+    font-size:6rem;
     margin-left:2rem;
 }
 main{
@@ -37,7 +37,7 @@ main{
 }
 .sidebar{
     grid-column:1/2;
-    font-size:1.6rem;
+    font-size:3rem;
     background-color:var(--sidebar-color);
     color:var(--font-header-color);
 }
@@ -61,7 +61,7 @@ main{
 
 }
 .category li h3{
-    font-size:1.5rem;
+    font-size:3rem;
 }
 .category ul{
     justify-content:space-evenly;
@@ -78,7 +78,7 @@ main{
     justify-content:space-between;
 }
 .projectCategory h2{
-    font-size:2.2rem;
+    font-size:5rem;
     color:white;
 }
 .category li{
@@ -88,7 +88,7 @@ main{
 .mainContent{
     grid-column:2/3;
     display:grid;
-    grid-template-rows:1fr 10fr;
+    grid-template-rows:5rem 1fr;
     position:relative;
 }
 .category{
@@ -112,7 +112,7 @@ footer{
 }
 
 footer p{
-    font-size:1.5rem;
+    font-size:3rem;
     color:var(--font-header-color);
 }
 footer img{
@@ -127,7 +127,7 @@ footer img{
     margin-right:1rem;
 }
 .projects li h3{
-    font-size:1.4rem;
+    font-size:3rem;
     color:var(--font-header-color)
 }
 .projects li{
@@ -161,12 +161,12 @@ footer img{
     width:20rem;
 }
 .projectAddBoard label{
-    font-size:1.5rem;
+    font-size:3rem;
     font-weight: bold;
     padding-bottom:0.5rem;
 }
 .projectAddBoard input{
-    font-size:1.3rem;
+    font-size:3rem;
 }
 .projectAddBoard img{
     width:20px;
@@ -202,7 +202,7 @@ footer img{
     background-color:rgb(235, 225, 225);
     border:none;
     cursor:pointer;
-    font-size:1.2rem;
+    font-size:3rem;
     font-weight: bold;
     width:100%;
 }
@@ -232,7 +232,7 @@ footer img{
 } */
 .taskList .task p{
     flex:1;
-    font-size:1.3rem;
+    font-size:3rem;
     text-align:left;
 }
 
@@ -255,7 +255,7 @@ footer img{
  
 }
 .taskHeader h2{
-    font-size:2rem;
+    font-size:4rem;
     margin-right:1rem;
 }
 .taskHeader img{
@@ -267,12 +267,12 @@ footer img{
     width:40rem;
 }
 .taskAddBoard label{
-    font-size:1.4rem;
+    font-size:5.5rem;
     margin-top:1.5rem;
     margin-bottom:0.4rem;
 }
 .taskAddBoard input,.taskAddBoard select,.taskAddBoard textarea{
-    font-size:1.3rem;
+    font-size:3rem;
     padding:0.25rem;
 }
 .btnTaskBoard{
@@ -282,7 +282,7 @@ footer img{
     margin-left:2rem;
 }
 .btnTaskBoard button{
-    font-size:1.2rem;
+    font-size:2.5rem;
     padding:0.6rem 1.2rem;
     margin-right:3rem;
     cursor:pointer;
