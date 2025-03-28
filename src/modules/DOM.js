@@ -255,6 +255,7 @@ export const Event_handle = () => {
     });
   }
   function renderProject(projectID) {
+    console.log("kil");
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
     const project = projects.find(
       (theProject) => theProject.id === Number(projectID),
@@ -262,6 +263,7 @@ export const Event_handle = () => {
     console.log(project);
 
     const mainPart = document.querySelector(".mainPart");
+    mainPart.innerHTML = "";
     const taskListDOM = document.createElement("ul");
     taskListDOM.setAttribute("class", "taskList");
     mainPart.appendChild(taskListDOM);
@@ -482,7 +484,7 @@ export const Event_handle = () => {
         displayProjectOptionBox(index);
         // const mainPart = document.querySelector(".mainPart");
         // mainPart.innerHTML = "";
-        // renderProject(i);
+        renderProject(i);
       });
     });
   }

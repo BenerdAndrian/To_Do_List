@@ -191,11 +191,16 @@ footer img{
 .projectOptionBox{
     position:absolute;
     right:-11rem;
+    bottom:0;
     border:1px solid;
     background-color:rgb(214, 214, 214);
     z-index:1;
     list-style:none;
 }
+.optionBox{
+    position:relative;
+}
+
 .projectUpdateBtn,.projectDeleteBtn,.taskDeleteBtn,.taskUpdateBtn{
     padding:0.5rem 3rem;
     background-color:rgb(235, 225, 225);
@@ -338,5 +343,13 @@ input{
     }
     .sidebar{
         width:2rem
+    }
+    main{
+        grid-template-columns:3rem 1fr;
+    }
+    .addIconProject{
+        width:35px;
+        height:35px;
+        margin-left:-0.2rem;
     }
 }
