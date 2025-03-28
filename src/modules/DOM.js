@@ -111,7 +111,7 @@ export const DOM_generate = () => {
     main.appendChild(div);
   }
   function renderProjects(parentElement) {
-    const projects = JSON.parse(localStorage.getItem("projects"));
+    const projects = JSON.parse(localStorage.getItem("projects")) || [];
     console.log(projects);
     const div = document.createElement("div");
     div.setAttribute("class", "projectCategory");
