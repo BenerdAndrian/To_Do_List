@@ -76,6 +76,7 @@ export const render = () => {
   event.clickOutsideOfProjectOptionBox();
   categorizeDateTime();
   event.renderCategory();
+  event.threeDotIconClick();
 };
 export const DOM_generate = () => {
   const body = document.querySelector("body");
@@ -673,8 +674,6 @@ export const Event_handle = () => {
     form.appendChild(duedateInput);
     form.appendChild(detailLabel);
     form.appendChild(detailInput);
-    form.appendChild(div);
-    body.appendChild(form);
     closeBoard(closeButton, form);
     //divide into 2 cases, true when taskAddBoard triggers in general project mainPart, one for the category render which we have to define which project the new task would go to.
     if (boolValue) {
@@ -694,6 +693,8 @@ export const Event_handle = () => {
       form.appendChild(projectLabel);
       form.appendChild(projectListInput);
     }
+    form.appendChild(div);
+    body.appendChild(form);
   }
 
   function pushNewTaskToTaskList(projectID) {

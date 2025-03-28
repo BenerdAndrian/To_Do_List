@@ -60,7 +60,7 @@ const task1 = new task(1, "backbf", "high", "2024-05-05", 1);
 task1.displayTask();
 
 export function changeTaskStateLogic(taskList, i, boolValue) {
-  const projects = JSON.parse(localStorage.getItem("projects"));
+  const projects = JSON.parse(localStorage.getItem("projects")) || [];
   const task = taskList[i];
   console.log("day la task: " + task.taskState);
   projects.forEach((project, index) => {
