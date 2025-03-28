@@ -30,4 +30,5 @@ export const projects = [
     ],
   },
 ];
+
 // const Projects = localStorage.setItem("projects", JSON.stringify(projects));

@@ -28,7 +28,7 @@ class project {
   }
 }
 function addProjectToProjectList(name) {
-  let projects = JSON.parse(localStorage.getItem("projects"));
+  let projects = JSON.parse(localStorage.getItem("projects")) || [];
   console.log(projects);
   console.log(projects);
   const newProjectID = projects.length;
@@ -38,14 +38,14 @@ function addProjectToProjectList(name) {
   localStorage.setItem("projects", JSON.stringify(projects));
 }
 function processProjectID() {
-  let projects = JSON.parse(localStorage.getItem("projects"));
+  let projects = JSON.parse(localStorage.getItem("projects")) || [];
   projects.forEach((theProject, index) => {
     theProject.id = index;
   });
   localStorage.setItem("projects", JSON.stringify(projects));
 }
 function processTaskID(projectID) {
-  let projects = JSON.parse(localStorage.getItem("projects"));
+  let projects = JSON.parse(localStorage.getItem("projects")) || [];
   projects.forEach((one) => {
     if (one.id === projectID) {
       one.taskList.forEach((task, index) => {
