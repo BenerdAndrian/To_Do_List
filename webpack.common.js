@@ -13,6 +13,12 @@ module.exports = {
       template: "./src/index.html",
     }),
   ],
+  ignoreWarnings: [
+    {
+      module: /node_modules\/date-fns\//,
+      message: /conflicting star exports/,
+    },
+  ],
   module: {
     rules: [
       {
