@@ -62,10 +62,12 @@ export const render = () => {
   const DOM = DOM_generate();
   const event = Event_handle();
   DOM.headerDOMGenerate();
+  console.log("faiting");
   DOM.mainDOMGenerate();
   DOM.mainSidebarDOMGenerate();
   DOM.renderMainContent();
   DOM.footerDOMGenerate();
+  console.log("fighting");
   const projectList = document.querySelectorAll(".projects h3");
   event.addDataIntoElement(projectList);
   event.displayProject();

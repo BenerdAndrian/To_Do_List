@@ -7,7 +7,7 @@ const upComingList = [];
 const inboxList = [];
 const completeList = [];
 console.log(today);
-
+//okkk
 function categorizeDateTime() {
   todayList.length = 0;
   tomorrowList.length = 0;
@@ -15,9 +15,7 @@ function categorizeDateTime() {
   upComingList.length = 0;
   inboxList.length = 0;
   completeList.length = 0;
-  console.log("ohlala");
   const projects = JSON.parse(localStorage.getItem("projects"));
-  console.log("nhan chua");
   projects.forEach((project) => {
     if (project.taskList.length > 0) {
       project.taskList.forEach((task) => {
