@@ -27,13 +27,13 @@ header{
   align-items:center;
 }
 header h1{
-    font-size:6rem;
+    font-size:clamp(2rem,3vw,6rem);
     margin-left:2rem;
 }
 main{
     grid-row:2/3;
     display:grid;
-    grid-template-columns:1.1fr 4fr;
+    grid-template-columns:minmax(250px,1fr) 4fr;
 }
 .sidebar{
     grid-column:1/2;
@@ -48,6 +48,8 @@ main{
 }
 .category li img{
   margin-right:0.5rem;
+  width:50px;
+  height:50px;
 }
 .projects{
     grid-column:1/2;
@@ -68,17 +70,14 @@ main{
     align-items: center;
     margin-top:1rem;
 }
-.category li img{
-    width:30px;
-    height:30px;
-}
+
 .projectCategory{
     display:flex;
     margin-top:2rem;
     justify-content:space-between;
 }
 .projectCategory h2{
-    font-size:5rem;
+    font-size:clamp(2rem,2.5vw,5rem);
     color:white;
 }
 .category li{
@@ -97,7 +96,7 @@ main{
 }
 .mainPart{
     grid-row:2/3;
-    padding:2rem 12rem;
+    padding:2rem clamp(2rem,10vw,12rem);
     height:100vh;
     overflow:auto;
 }
@@ -112,7 +111,7 @@ footer{
 }
 
 footer p{
-    font-size:3rem;
+    font-size:clamp(1rem,2vw,5rem);
     color:var(--font-header-color);
 }
 footer img{
@@ -127,7 +126,7 @@ footer img{
     margin-right:1rem;
 }
 .projects li h3{
-    font-size:3rem;
+    font-size:clamp(1rem,2vw,2.5rem);
     color:var(--font-header-color)
 }
 .projects li{
@@ -161,12 +160,12 @@ footer img{
     width:20rem;
 }
 .projectAddBoard label{
-    font-size:3rem;
+    font-size:1.5rem;
     font-weight: bold;
     padding-bottom:0.5rem;
 }
 .projectAddBoard input{
-    font-size:3rem;
+    font-size:1.5rem;
 }
 .projectAddBoard img{
     width:20px;
@@ -202,7 +201,7 @@ footer img{
     background-color:rgb(235, 225, 225);
     border:none;
     cursor:pointer;
-    font-size:3rem;
+    font-size:1.5rem;
     font-weight: bold;
     width:100%;
 }
@@ -215,6 +214,7 @@ footer img{
     border-radius:0.5rem;
     align-items: center;
     position:relative;
+    min-width:15rem;
 }
 .taskList .task .threeDotIcon{
     cursor:pointer;
@@ -232,8 +232,9 @@ footer img{
 } */
 .taskList .task p{
     flex:1;
-    font-size:3rem;
+    font-size:clamp(1.3rem,1.5vw,3rem);
     text-align:left;
+    margin-right:2rem;
 }
 
 .addIconProject{
@@ -247,6 +248,8 @@ footer img{
     width:1rem;
     position:absolute;
     left:0;
+    bottom:0;
+    top:0;
 }
 .taskHeader{
     display:flex;
@@ -255,7 +258,7 @@ footer img{
  
 }
 .taskHeader h2{
-    font-size:4rem;
+    font-size:clamp(1rem,2vw,3rem);
     margin-right:1rem;
 }
 .taskHeader img{
@@ -267,12 +270,12 @@ footer img{
     width:40rem;
 }
 .taskAddBoard label{
-    font-size:5.5rem;
+    font-size:clamp(1rem,2vw,3rem);
     margin-top:1.5rem;
     margin-bottom:0.4rem;
 }
 .taskAddBoard input,.taskAddBoard select,.taskAddBoard textarea{
-    font-size:3rem;
+    font-size:clamp(1rem,2vw,3rem);
     padding:0.25rem;
 }
 .btnTaskBoard{
@@ -282,7 +285,7 @@ footer img{
     margin-left:2rem;
 }
 .btnTaskBoard button{
-    font-size:2.5rem;
+    font-size:1.4rem;
     padding:0.6rem 1.2rem;
     margin-right:3rem;
     cursor:pointer;
@@ -302,4 +305,38 @@ footer img{
 }
 input{
     cursor:pointer;
+}
+@media screen and (max-width:2000px){
+    .category li h3{
+        display:none;
+    }
+    .taskList .task p,.taskList .task input{
+        margin-bottom:1rem;
+        float:left;
+    }
+}
+@media screen and (max-width:1000px){
+    .taskList .task{
+        flex-direction:column;
+        padding-top:1rem;
+    }
+    .taskList .task p{
+        font-size:1.5rem;
+    }
+    .taskAddBoard{
+        width:25rem;
+    }
+    .category li img{
+        margin-right:0.25rem;
+        width:40px;
+        height:40px;
+      }
+}
+@media screen and (max-width:600px){
+    .projects h2,.projects li h3{
+        display:none;
+    }
+    .sidebar{
+        width:2rem
+    }
 }
