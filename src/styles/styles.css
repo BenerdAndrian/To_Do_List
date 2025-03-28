@@ -76,6 +76,7 @@ main{
     margin-top:2rem;
     justify-content:space-between;
 }
+
 .projectCategory h2{
     font-size:clamp(2rem,2.5vw,5rem);
     color:white;
@@ -96,7 +97,7 @@ main{
 }
 .mainPart{
     grid-row:2/3;
-    padding:2rem clamp(2rem,10vw,12rem);
+    padding:2rem clamp(2rem,10vw,16rem);
     height:100vh;
     overflow:auto;
 }
@@ -246,6 +247,7 @@ footer img{
     width:50px;
     height:50px;
     cursor:pointer;
+    margin-bottom:3rem;
 }
 .priorityLevelUI{
     display:inline-block;
@@ -263,7 +265,7 @@ footer img{
  
 }
 .taskHeader h2{
-    font-size:clamp(1rem,2vw,3rem);
+    font-size:clamp(1.5rem,2vw,3rem);
     margin-right:1rem;
 }
 .taskHeader img{
@@ -316,17 +318,26 @@ input{
         display:none;
     }
     .taskList .task p,.taskList .task input{
-        margin-bottom:1rem;
         float:left;
     }
 }
 @media screen and (max-width:1000px){
+    .projects h2,.projects li h3{
+        display:none;
+    }
+    .sidebar{
+        width:2rem
+    }
     .taskList .task{
         flex-direction:column;
         padding-top:1rem;
     }
-    .taskList .task p{
+    .taskList .task p,.taskList .task input{
         font-size:1.5rem;
+        margin-bottom:1rem;
+    }
+    .taskList .task input{
+        margin-left:-0.5rem;
     }
     .taskAddBoard{
         width:26rem;
@@ -341,15 +352,7 @@ input{
         font-size:1rem;
     }
     .projectOptionBox{
-        right:-8rem;
-    }
-}
-@media screen and (max-width:600px){
-    .projects h2,.projects li h3{
-        display:none;
-    }
-    .sidebar{
-        width:2rem
+        right:1rem;
     }
     main{
         grid-template-columns:3rem 1fr;

@@ -4,7 +4,8 @@ import Today from "../asset/images/Today.svg";
 import Complete from "../asset/images/Complete.svg";
 import Tomorrow from "../asset/images/Tomorrow.svg";
 import Upcoming from "../asset/images/Upcoming.svg";
-import threeDots from "../asset/images/3dots.svg";
+import threeDots from "../asset/images/blackdot.svg";
+import whiteDots from "../asset/images/3dots.svg";
 import addIcon from "../asset/images/addIcon.svg";
 import closeIcon from "../asset/images/closeIcon.svg";
 import gitLogo from "../asset/images/gitLogo.svg";
@@ -128,7 +129,7 @@ export const DOM_generate = () => {
     const ul = document.createElement("ul");
     projects.forEach((project) => {
       const image = document.createElement("img");
-      image.src = threeDots;
+      image.src = whiteDots;
       image.setAttribute("class", "projectThreeDotIcon");
       const li = document.createElement("li");
       const h3 = document.createElement("h3");

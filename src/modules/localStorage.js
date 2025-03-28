@@ -30,5 +30,6 @@ export const projects = [
     ],
   },
 ];
-
+export const inboxList = [];
+// const inboxLists = localStorage.setItem("inbox", JSON.stringify(inboxList));
 // const Projects = localStorage.setItem("projects", JSON.stringify(projects));
