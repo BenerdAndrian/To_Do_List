@@ -340,7 +340,7 @@ input{
         margin-left:-0.5rem;
     }
     .taskAddBoard{
-        width:26rem;
+        max-width:26rem;
     }
     .category li img{
         margin-right:0.25rem;
@@ -364,5 +364,13 @@ input{
         width:35px;
         height:35px;
         margin-left:-0.2rem;
+    }
+}
+@media screen and (max-width:500px){
+    .taskAddBoard label, .taskAddBoard input,.taskAddBoard button{
+        font-size:0.8rem
+    }
+    .taskAddBoard{
+        max-width:20rem;
     }
 }
