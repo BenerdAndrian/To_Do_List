@@ -34,7 +34,8 @@ function display3DotsForRestOfText(string, stringLength, fixedLength) {
   }
 }
 //render the page but go back to current project display rather than render from the initial state
-const re_render = (index) => {
+export const re_render = (index) => {
+  console.log("darender chua");
   const body = document.querySelector("body");
   body.innerHTML = "";
   const DOM = DOM_generate();
@@ -50,12 +51,11 @@ const re_render = (index) => {
   event.addIconProjectClick();
   event.printProjects();
   event.taskThreeDotsIconClick();
+  event.threeDotIconClick();
   event.clickOutsideOfProjectOptionBox();
   categorizeDateTime();
   event.renderCategory();
-  if (index) {
-    event.renderProject(index);
-  }
+  event.renderProject(index);
 };
 export const render = () => {
   const body = document.querySelector("body");
@@ -763,6 +763,8 @@ export const Event_handle = () => {
                 projectID: index,
               });
               localStorage.setItem("projects", JSON.stringify(projects));
+              console.log("troioi");
+              console.log("day la id cua project: " + index);
               re_render(index);
             }
           });

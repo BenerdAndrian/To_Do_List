@@ -1,3 +1,4 @@
+import { re_render } from "./DOM";
 export class task {
   constructor(taskID, taskName, taskPriority, taskDuedate, projectID) {
     this.taskID = taskID;
@@ -71,6 +72,7 @@ export function changeTaskStateLogic(taskList, i, boolValue) {
         project.taskList[task.taskID].taskState = "not complete";
       }
       localStorage.setItem("projects", JSON.stringify(projects));
+      re_render(index);
     }
   });
 }
