@@ -121,8 +121,8 @@ footer img{
     margin-left:1rem;
 }
 .projectThreeDotIcon,.taskThreeDotIcon{
-    width:25px;
-    height:25px;
+    width:30px;
+    height:30px;
     cursor:pointer;
     margin-right:1rem;
 }
@@ -351,8 +351,11 @@ input{
         padding:0.3rem 2rem;
         font-size:1rem;
     }
-    .projectOptionBox{
+    .task .projectOptionBox{
         right:1rem;
+    }
+    .projects .projectOptionBox{
+        right:-8rem;
     }
     main{
         grid-template-columns:3rem 1fr;

@@ -546,7 +546,8 @@ export const Event_handle = () => {
           projects.splice(i, 1);
           localStorage.setItem("projects", JSON.stringify(projects));
           processProjectID();
-          re_render(index);
+          console.log("mikita");
+          render();
           threeDotIconClick();
         }
       });
