@@ -96,7 +96,7 @@ export const DOM_generate = () => {
   function footerDOMGenerate() {
     const footer = document.createElement("footer");
     const p = document.createElement("p");
-    p.textContent = "Created By Michael Ben";
+    p.textContent = "Created By Benerd Andrian";
     const a = document.createElement("a");
     a.href = "https://github.com/BenerdAndrian";
     const img = document.createElement("img");
@@ -151,7 +151,6 @@ export const DOM_generate = () => {
     const div = document.createElement("div");
     div.setAttribute("class", "category");
     const categories = [
-      "Inbox",
       "Today",
       "Tomorrow",
       "This Week",
@@ -390,6 +389,33 @@ export const Event_handle = () => {
       const projectAddBoard = document.querySelector(".projectAddBoard");
       closeBoard(closeBtn, projectAddBoard);
     });
+  }
+  function notify() {
+    addBlurLayer();
+    displayNotificationBoard();
+    const closeBtn = document.querySelector(".closeBtn");
+    const projectAddBoard = document.querySelector(".projectAddBoard");
+    const blurlayer = document.querySelector(".blurLayer");
+    const taskAddBoard = document.querySelector(".taskAddBoard");
+    closeBoard(closeBtn, projectAddBoard);
+    blurlayer.remove();
+    taskAddBoard.remove();
+  }
+  function displayNotificationBoard() {
+    const closeBtn = document.createElement("img");
+    closeBtn.src = closeIcon;
+    closeBtn.alt = "close icon";
+    closeBtn.setAttribute("class", "closeBtn");
+    const div = document.createElement("div");
+    div.className = "projectAddBoard";
+    const p = document.createElement("p");
+    p.textContent =
+      "You dont have any projects right now. Create a project first before adding a task.";
+    p.className = "notify";
+    div.appendChild(closeBtn);
+    div.appendChild(p);
+    const body = document.querySelector("body");
+    body.appendChild(div);
   }
   function displayProjectInfoAddBoard() {
     const closeBtn = document.createElement("img");
@@ -712,8 +738,6 @@ export const Event_handle = () => {
       taskAddBoardBtn.addEventListener("click", (e) => {
         e.preventDefault();
         if (form.checkValidity()) {
-          console.log(form.checkValidity());
-          console.log("hello kitty");
           projects.forEach((project, i) => {
             //check if projectID taking from the time clicking on project showing is the same with project inside projectList in localstorage
             if (Number(projectID) === i) {
@@ -744,30 +768,42 @@ export const Event_handle = () => {
         e.preventDefault();
         if (form.checkValidity()) {
           const projectChoosing = document.querySelector("#projectChoosing");
-          const index = Number(
-            projectChoosing.options[projectChoosing.selectedIndex].dataset
-              .index,
-          );
+          let index;
+          if (projectChoosing.options[projectChoosing.selectedIndex]) {
+            index = Number(
+              projectChoosing.options[projectChoosing.selectedIndex].dataset
+                .index || -1,
+            );
+          } else {
+            index = -1;
+          }
+
           console.log(index);
           console.log(projectChoosing);
-          projects.forEach((project) => {
-            if (index === project.id) {
-              const taskLength = project.taskList.length;
-              project.taskList.push({
-                taskID: taskLength,
-                taskName: nameInput.value,
-                taskPriority: priorityInput.value,
-                taskDuedate: duedateInput.value,
-                taskDetail: detailInput.value,
-                taskState: "not complete",
-                projectID: index,
-              });
-              localStorage.setItem("projects", JSON.stringify(projects));
-              console.log("troioi");
-              console.log("day la id cua project: " + index);
-              re_render(index);
-            }
-          });
+          if (index >= 0) {
+            console.log("ko note");
+            projects.forEach((project) => {
+              if (index === project.id) {
+                const taskLength = project.taskList.length;
+                project.taskList.push({
+                  taskID: taskLength,
+                  taskName: nameInput.value,
+                  taskPriority: priorityInput.value,
+                  taskDuedate: duedateInput.value,
+                  taskDetail: detailInput.value,
+                  taskState: "not complete",
+                  projectID: index,
+                });
+                localStorage.setItem("projects", JSON.stringify(projects));
+                console.log("troioi");
+                console.log("day la id cua project: " + index);
+                re_render(index);
+              }
+            });
+          } else {
+            console.log("co note");
+            notify();
+          }
         }
       });
     }
