@@ -30,7 +30,6 @@ class project {
 function addProjectToProjectList(name) {
   let projects = JSON.parse(localStorage.getItem("projects")) || [];
   console.log(projects);
-  console.log(projects);
   const newProjectID = projects.length;
   const newProject = new project(newProjectID, name);
   projects.push(newProject);

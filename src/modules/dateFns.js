@@ -6,7 +6,7 @@ const thisWeekList = [];
 const upComingList = [];
 const inboxList = [];
 const completeList = [];
-console.log(today);
+
 //okkk
 function categorizeDateTime() {
   todayList.length = 0;
@@ -20,11 +20,9 @@ function categorizeDateTime() {
     projects.forEach((project) => {
       if (project.taskList.length > 0) {
         project.taskList.forEach((task) => {
-          console.log(task.taskDuedate);
           const dueDate = parse(task.taskDuedate, "yyyy-MM-dd", new Date()); // make sure it's a Date object
 
           if (isToday(dueDate) && task.taskState === "not complete") {
-            console.log("today ne");
             todayList.push(task);
           } else if (isTomorrow(dueDate) && task.taskState === "not complete") {
             tomorrowList.push(task);

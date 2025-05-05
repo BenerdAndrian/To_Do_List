@@ -1,3 +1,4 @@
+//import all necessary resources
 import Inbox from "../asset/images/Inbox.svg";
 import ThisWeek from "../asset/images/This Week.svg";
 import Today from "../asset/images/Today.svg";
@@ -35,7 +36,6 @@ function display3DotsForRestOfText(string, stringLength, fixedLength) {
 }
 //render the page but go back to current project display rather than render from the initial state
 export const re_render = (index) => {
-  console.log("darender chua");
   const body = document.querySelector("body");
   body.innerHTML = "";
   const DOM = DOM_generate();
@@ -63,12 +63,10 @@ export const render = () => {
   const DOM = DOM_generate();
   const event = Event_handle();
   DOM.headerDOMGenerate();
-  console.log("faiting");
   DOM.mainDOMGenerate();
   DOM.mainSidebarDOMGenerate();
   DOM.renderMainContent();
   DOM.footerDOMGenerate();
-  console.log("fighting");
   const projectList = document.querySelectorAll(".projects h3");
   event.addDataIntoElement(projectList);
   event.displayProject();
@@ -116,7 +114,6 @@ export const DOM_generate = () => {
   }
   function renderProjects(parentElement) {
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
-    console.log(projects);
     const div = document.createElement("div");
     div.setAttribute("class", "projectCategory");
     const h2 = document.createElement("h2");
@@ -233,7 +230,6 @@ export const Event_handle = () => {
     categoryList.forEach((li) => {
       li.addEventListener("click", () => {
         // renderMainContent();
-        console.log(li.innerText);
       });
     });
   }
@@ -244,7 +240,6 @@ export const Event_handle = () => {
         const mainPart = document.querySelector(".mainPart");
         mainPart.innerHTML = ``;
         const index = h3.dataset.index;
-        console.log(index);
         renderProject(index);
       });
     });
@@ -252,16 +247,13 @@ export const Event_handle = () => {
   function addDataIntoElement(projectList) {
     projectList.forEach((li, index) => {
       li.setAttribute("data-index", index);
-      console.log(index);
     });
   }
   function renderProject(projectID) {
-    console.log("kil");
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
     const project = projects.find(
       (theProject) => theProject.id === Number(projectID),
     );
-    console.log(project);
 
     const mainPart = document.querySelector(".mainPart");
     mainPart.innerHTML = "";
@@ -286,9 +278,7 @@ export const Event_handle = () => {
     mainPart.insertBefore(div, taskListDOM);
     if (project) {
       const taskList = project.taskList;
-      console.log(taskList);
       if (taskList.length > 0) {
-        console.log(taskList);
         renderTask(taskList);
         //add data to task
         const tasks = document.querySelectorAll(".task");
@@ -443,7 +433,6 @@ export const Event_handle = () => {
     body.appendChild(form);
   }
   function displayTaskUpdateBoard(projectID, index) {
-    console.log(projectID);
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
     console.log(projectID);
     displayTaskBoard(projectID, "Update Task", false);
@@ -453,10 +442,7 @@ export const Event_handle = () => {
     const detailInput = document.querySelector("#taskDetailInput");
     projects.forEach((project, i) => {
       if (i === Number(projectID)) {
-        console.log("index can tim " + index);
-        console.log("task can tim: " + project.taskList[index]);
         const task = project.taskList[Number(index)];
-        console.log("task can tim: " + task);
         nameInput.value = task.taskName;
         priorityInput.value = task.taskPriority;
         duedateInput.value = task.taskDuedate;
@@ -469,12 +455,9 @@ export const Event_handle = () => {
     div.setAttribute("class", "blurLayer");
     const body = document.querySelector("body");
     body.appendChild(div);
-    console.log("sole sole");
   }
   function closeBoard(closeBtn, board) {
-    console.log("i");
     if (closeBtn) {
-      console.log(true);
       closeBtn.addEventListener("click", () => {
         removeProjectBoard(board);
       });
@@ -492,7 +475,6 @@ export const Event_handle = () => {
       const form = document.querySelector(".projectAddBoard");
       input.setCustomValidity("");
       if (form.checkValidity()) {
-        console.log(input.value);
         const inputValue = input.value;
         addProjectToProjectList(inputValue);
         render();
@@ -532,7 +514,6 @@ export const Event_handle = () => {
       const firstChild = li.firstElementChild;
       const i = Number(firstChild.dataset.index);
       if (i === index) {
-        console.log("fn");
         const ul = document.createElement("ul");
         ul.setAttribute("class", "projectOptionBox");
         const optionList1 = document.createElement("li");
@@ -548,8 +529,6 @@ export const Event_handle = () => {
         ul.appendChild(optionList1);
         ul.appendChild(optionList2);
         li.appendChild(ul);
-        console.log(li);
-        console.log("fen");
       }
     });
     projectUpdateBtnClick(index);
@@ -572,7 +551,6 @@ export const Event_handle = () => {
           projects.splice(i, 1);
           localStorage.setItem("projects", JSON.stringify(projects));
           processProjectID();
-          console.log("mikita");
           render();
           threeDotIconClick();
         }
@@ -600,12 +578,9 @@ export const Event_handle = () => {
       const input = document.querySelector("#projectName");
       if (input.value) {
         newName = input.value;
-        console.log(newName);
         projects.forEach((project, i) => {
-          console.log(project);
           if (index === i) {
             project.name = newName;
-            console.log(project.name);
           }
           localStorage.setItem("projects", JSON.stringify(projects));
           re_render(index);
@@ -615,7 +590,6 @@ export const Event_handle = () => {
         input.reportValidity();
       }
     });
-    console.log(projects);
   }
   //add task
   function addTaskIconClick(projectID, bool) {
@@ -741,7 +715,6 @@ export const Event_handle = () => {
           projects.forEach((project, i) => {
             //check if projectID taking from the time clicking on project showing is the same with project inside projectList in localstorage
             if (Number(projectID) === i) {
-              console.log("toi bi khung");
               // if true then add task with new info into taskList array of the project
               const taskLength = project.taskList.length;
               project.taskList.push({
@@ -778,10 +751,7 @@ export const Event_handle = () => {
             index = -1;
           }
 
-          console.log(index);
-          console.log(projectChoosing);
           if (index >= 0) {
-            console.log("ko note");
             projects.forEach((project) => {
               if (index === project.id) {
                 const taskLength = project.taskList.length;
@@ -795,13 +765,10 @@ export const Event_handle = () => {
                   projectID: index,
                 });
                 localStorage.setItem("projects", JSON.stringify(projects));
-                console.log("troioi");
-                console.log("day la id cua project: " + index);
                 re_render(index);
               }
             });
           } else {
-            console.log("co note");
             notify();
           }
         }
@@ -830,13 +797,9 @@ export const Event_handle = () => {
     deleteCurrentTaskBtnClick(projectID, index);
   }
   function displayTaskOptionBox(index) {
-    console.log("kakakakaakaka");
     const tasks = document.querySelectorAll(".taskList .task");
     tasks.forEach((task, i) => {
-      console.log("kikiki");
-      console.log(i);
       if (i === Number(index)) {
-        console.log("fn");
         const ul = document.createElement("ul");
         ul.setAttribute("class", "projectOptionBox");
         const optionList1 = document.createElement("li");
@@ -852,7 +815,6 @@ export const Event_handle = () => {
         ul.appendChild(optionList1);
         ul.appendChild(optionList2);
         task.appendChild(ul);
-        console.log("fen");
       }
     });
   }
@@ -862,20 +824,16 @@ export const Event_handle = () => {
     taskUpdateBtn.addEventListener("click", () => {
       addBlurLayer();
       displayTaskUpdateBoard(projectID, index);
-      console.log("salim");
       console.log(projectID);
       updateCurrentTaskBtnClick(projectID, index);
-      console.log("rai tham");
     });
   }
   function deleteCurrentTaskBtnClick(projectID, index) {
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
     const deleteBtn = document.querySelector(".taskDeleteBtn");
     deleteBtn.addEventListener("click", () => {
-      console.log("loo");
       projects.forEach((project, i) => {
         if (Number(projectID) === i) {
-          console.log("kep");
           project.taskList.splice(index, 1);
           localStorage.setItem("projects", JSON.stringify(projects));
           processTaskID(projectID);
@@ -885,7 +843,6 @@ export const Event_handle = () => {
     });
   }
   function updateCurrentTaskBtnClick(projectID, index) {
-    console.log("duoc ko");
     const projects = JSON.parse(localStorage.getItem("projects")) || [];
     const taskSubmitBtn = document.querySelector(".taskAddBoardBtn");
     const form = document.querySelector(".taskAddBoard");
@@ -895,13 +852,10 @@ export const Event_handle = () => {
     const newDetailInput = document.querySelector("#taskDetailInput");
     taskSubmitBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("lolo");
       if (form.checkValidity()) {
-        console.log("lalisa");
         projects.forEach((project, i) => {
           console.log(projectID);
           if (i === Number(projectID)) {
-            console.log("mamilll");
             project.taskList[index] = {
               taskID: index,
               taskName: newNameInput.value,
@@ -954,12 +908,10 @@ export const Event_handle = () => {
     }
   }
   function taskThreeDotsCategoryIconClick(list) {
-    console.log(list);
     const threeDotIcon = document.querySelectorAll(".taskThreeDotIcon");
     threeDotIcon.forEach((icon, index) => {
       icon.addEventListener("click", () => {
         removeCurrentProjectOptionBox();
-        console.log("vi tri click : " + index);
         displayTaskOptionBox(index);
         theFunction(list, index);
       });
@@ -967,11 +919,9 @@ export const Event_handle = () => {
   }
   function theFunction(list, index) {
     list.forEach((task, i) => {
-      console.log(task);
       if (i === index) {
         taskUpdateBtnClick(task.projectID, task.taskID);
         deleteCurrentTaskBtnClick(task.projectID, task.taskID);
-        console.log("linee");
       }
     });
   }
@@ -997,7 +947,6 @@ export const Event_handle = () => {
   function upComingCategoryClick() {
     const upcomingList = document.querySelector(".Upcoming");
     upcomingList.addEventListener("click", () => {
-      console.log("nihao");
       renderTaskListBaseOnCategory("Upcoming", upComingList);
     });
   }
@@ -1028,4 +977,3 @@ export const Event_handle = () => {
   };
 };
 const dom = DOM_generate();
-console.log(dom.find(2));
